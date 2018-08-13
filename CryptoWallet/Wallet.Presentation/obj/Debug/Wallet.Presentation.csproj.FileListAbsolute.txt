@@ -1,0 +1,14 @@
+D:\Work\CryptoWallet\CryptoWallet\Wallet.Presentation\bin\Debug\Wallet.Presentation.exe.config
+D:\Work\CryptoWallet\CryptoWallet\Wallet.Presentation\bin\Debug\Wallet.Presentation.exe
+D:\Work\CryptoWallet\CryptoWallet\Wallet.Presentation\bin\Debug\Wallet.Presentation.pdb
+D:\Work\CryptoWallet\CryptoWallet\Wallet.Presentation\obj\Debug\App.g.cs
+D:\Work\CryptoWallet\CryptoWallet\Wallet.Presentation\obj\Debug\Wallet.Presentation_MarkupCompile.cache
+D:\Work\CryptoWallet\CryptoWallet\Wallet.Presentation\obj\Debug\Wallet.Presentation_MarkupCompile.lref
+D:\Work\CryptoWallet\CryptoWallet\Wallet.Presentation\obj\Debug\Wallet.Presentation.g.resources
+D:\Work\CryptoWallet\CryptoWallet\Wallet.Presentation\obj\Debug\Wallet.Presentation.Properties.Resources.resources
+D:\Work\CryptoWallet\CryptoWallet\Wallet.Presentation\obj\Debug\Wallet.Presentation.csproj.GenerateResource.cache
+D:\Work\CryptoWallet\CryptoWallet\Wallet.Presentation\obj\Debug\Wallet.Presentation.csproj.CoreCompileInputs.cache
+D:\Work\CryptoWallet\CryptoWallet\Wallet.Presentation\obj\Debug\Wallet.Presentation.exe
+D:\Work\CryptoWallet\CryptoWallet\Wallet.Presentation\obj\Debug\Wallet.Presentation.pdb
+D:\Work\CryptoWallet\CryptoWallet\Wallet.Presentation\obj\Debug\View\MainWindow.g.cs
+D:\Work\CryptoWallet\CryptoWallet\Wallet.Presentation\obj\Debug\View\MainWindow.baml

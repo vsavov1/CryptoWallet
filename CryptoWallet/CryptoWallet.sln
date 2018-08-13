@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2018
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wallet.Presentation", "Wallet.Presentation\Wallet.Presentation.csproj", "{420139DB-56F9-405D-A624-B5DDA2E24491}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wallet.Core", "Wallet.Core\Wallet.Core.csproj", "{2F30AFE6-ABA3-46ED-B1E6-D3FD459E2E59}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{420139DB-56F9-405D-A624-B5DDA2E24491}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{420139DB-56F9-405D-A624-B5DDA2E24491}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{420139DB-56F9-405D-A624-B5DDA2E24491}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{420139DB-56F9-405D-A624-B5DDA2E24491}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F30AFE6-ABA3-46ED-B1E6-D3FD459E2E59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F30AFE6-ABA3-46ED-B1E6-D3FD459E2E59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F30AFE6-ABA3-46ED-B1E6-D3FD459E2E59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F30AFE6-ABA3-46ED-B1E6-D3FD459E2E59}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {70790CBD-EF4E-4F88-BEC1-CE0F3A43659F}
+	EndGlobalSection
+EndGlobal
