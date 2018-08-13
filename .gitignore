@@ -4,3 +4,6 @@
 
 /CryptoWallet/.vs/CryptoWallet/v15
 /CryptoWallet/packages
+/CryptoWallet/Wallet.Core/bin/Debug
+/CryptoWallet/Wallet.Presentation/bin/Debug
+/CryptoWallet/Wallet.Core/obj/Debug

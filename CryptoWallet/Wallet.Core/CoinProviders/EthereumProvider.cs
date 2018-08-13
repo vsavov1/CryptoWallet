@@ -28,12 +28,12 @@ namespace Wallet.Core.CoinProviders
             throw new NotImplementedException();
         }
 
-        public override void CreateWallet()
+        public override void CreateWallet(string walletName)
         {
             throw new NotImplementedException();
         }
 
-        public override void RestoreWallet()
+        public override void RestoreWallet(string walletName)
         {
             throw new NotImplementedException();
         }
