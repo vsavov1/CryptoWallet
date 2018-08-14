@@ -22,6 +22,7 @@ namespace Wallet.Presentation
     {
         public MainWindow()
         {
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
         }
     }
