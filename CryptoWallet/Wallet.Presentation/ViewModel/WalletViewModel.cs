@@ -37,6 +37,10 @@ namespace Wallet.Presentation.ViewModel
             switch (coin)
             {
                 case "Bitcoin":
+                    var mainWindow = (MainWindow)Application.Current.MainWindow;
+                    if (mainWindow == null) return;
+                    var page = new BitcoinPage(mainWindow.Content);
+                    mainWindow.Content = page;
                     WalletModel.CoinProvider = new BitcoinProvider(Network.TestNet); //todo
                     break;
                 case "Ethereum":

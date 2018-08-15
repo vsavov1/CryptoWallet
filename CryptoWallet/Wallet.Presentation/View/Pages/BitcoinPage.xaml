@@ -1,0 +1,66 @@
+﻿<Page x:Class="Wallet.Presentation.View.Pages.BitcoinPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Wallet.Presentation.View.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="BitcoinPage">
+    <Page.Resources>
+        <Style TargetType="ListBoxItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
+            <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+            <Setter Property="Background" Value="LightGray"></Setter>
+            <Setter Property="Opacity" Value="0.75"></Setter>
+            <Setter Property="BorderBrush" Value="{StaticResource MaterialDesignLightSeparatorBackground}"></Setter>
+            <!-- <Setter Property="Foreground" Value="#fff"></Setter> -->
+            <Style.Triggers>
+                <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                    <Setter Property="Background" Value="LightGray"></Setter>
+                    <Setter Property="Opacity" Value="0.75"></Setter>
+                </Trigger>
+                <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                    <Setter Property="Background" Value="#c6c6c6"></Setter>
+                    <Setter Property="Opacity" Value="0.75"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="../../Resources/bgr.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
+        <ListBox ScrollViewer.VerticalScrollBarVisibility="Visible"  AlternationCount="2" Height="167" Margin="0,283,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="784">
+            <ListBoxItem>ListBox Item #1</ListBoxItem>
+            <ListBoxItem>ListBox Item #2</ListBoxItem>
+            <ListBoxItem>ListBox Item #3</ListBoxItem>
+            <ListBoxItem>ListBox Item #3</ListBoxItem>
+            <ListBoxItem>ListBox Item #1</ListBoxItem>
+            <ListBoxItem>ListBox Item #2</ListBoxItem>
+            <ListBoxItem>ListBox Item #3</ListBoxItem>
+            <ListBoxItem>ListBox Item #3</ListBoxItem>
+            <ListBoxItem>ListBox Item #1</ListBoxItem>
+
+        </ListBox>
+        <Button Content="Receive" HorizontalAlignment="Center" Margin="-150,216,0,0" VerticalAlignment="Top" Width="121"/>
+        <Button Content="Send" HorizontalAlignment="Center" Margin="150,217,0,0" VerticalAlignment="Top" Width="121"/>
+        <TextBlock HorizontalAlignment="Center" Margin="248,111,257,0" FontSize="35" TextWrapping="Wrap" Padding="15,0,10,0"  Text="5.321512311 BTC" VerticalAlignment="Top" Width="295"/>
+        <Image HorizontalAlignment="Left" Source="../../Resources/bitcoin.png" Height="100" Margin="344,15,0,0" VerticalAlignment="Top" Width="100"/>
+        <TextBlock HorizontalAlignment="Center" Margin="324,158,309,0" FontSize="25" TextWrapping="Wrap" Padding="15,0,10,0"  Text="31.535 USD" VerticalAlignment="Top" Width="167"/>
+    </Grid>
+</Page>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

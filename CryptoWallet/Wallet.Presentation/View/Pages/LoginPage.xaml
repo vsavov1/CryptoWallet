@@ -21,7 +21,7 @@
         <PasswordBox PasswordChanged="PasswordChanged" HorizontalAlignment="Center" Name="Password" Style="{StaticResource MaterialDesignPasswordBox}" materialDesign:HintAssist.Hint="Password" VerticalAlignment="Center" Height="33" Margin="0,45,0,0" FontSize="17" Width="200"/>
 
         <Button Content="Back" Click="BackToMainWindow" Background="{StaticResource MaterialDesignBodyLight}" HorizontalAlignment="Center" Margin="300,310,424,0" VerticalAlignment="Top" Width="76"/>
-        <Button Name="LoginBtn" Content="Create"  Command="{Binding LoginCommand}" HorizontalAlignment="Center" Margin="424,310,300,0" VerticalAlignment="Top" Width="76">
+        <Button Name="LoginBtn" Content="Login"  Command="{Binding LoginCommand}" HorizontalAlignment="Center" Margin="424,310,300,0" VerticalAlignment="Top" Width="76">
             <Button.CommandParameter>
                 <MultiBinding Converter="{StaticResource AccountConverter}">
                     <Binding ElementName="AccountName" Path="Text" />
