@@ -11,6 +11,7 @@ using NBitcoin;
 using Wallet.Core.CoinProviders;
 using Wallet.Presentation.Commands;
 using Wallet.Presentation.Model;
+using Wallet.Presentation.View.Pages;
 
 namespace Wallet.Presentation.ViewModel
 {
@@ -24,26 +25,23 @@ namespace Wallet.Presentation.ViewModel
         }
 
         public ICommand SelectCoin => new RelayCommand<string>(SelectCoinProvider);
-        public ICommand CreateAccount => new DelegateCommand(OpenCreateAccountWindow);
+        public ICommand CreateAccount => new DelegateCommand(OpenCreateAccountPage);
+        public ICommand Login => new DelegateCommand(OpenLoginPage);
 
-        private void OpenCreateAccountWindow()
+        private void OpenCreateAccountPage()
         {
-            MainWindow mw = (MainWindow)Application.Current.MainWindow;
+            var mainWindow = (MainWindow)Application.Current.MainWindow;
+            if (mainWindow == null) return;
+            var page = new CreateAccountPage(mainWindow.Content);
+            mainWindow.Content = page;
+        }
 
-            //            CreateAccountWindow createAccountWindow  = new CreateAccountWindow();
-            //            createAccountWindow.Owner = mw;
-            //            createAccountWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            //            createAccountWindow.Show();
-            var userControls = FindVisualChildren<UserControl>(mw);
-            foreach (var userControl in userControls)
-            {
-//                if (userControl is UserControl1)
-//                {
-//                    userControl.Visibility = Visibility.Hidden;
-//                }
-            }
-
-            //            mw.Hide();
+        private void OpenLoginPage()
+        {
+            var mainWindow = (MainWindow)Application.Current.MainWindow;
+            if (mainWindow == null) return;
+            var page = new LoginPage(mainWindow.Content);
+            mainWindow.Content = page;
         }
 
         public string Password

@@ -1,0 +1,24 @@
+﻿<Page x:Class="Wallet.Presentation.View.Pages.LoginPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Wallet.Presentation.View.Pages"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="LoginPage">
+
+    <Grid>
+        <TextBlock HorizontalAlignment="Left" FontSize="30" Margin="363,50,0,0" TextWrapping="Wrap" Text="Login" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Text="{}" materialDesign:HintAssist.Hint="Account name" VerticalAlignment="Top" Height="23" Margin="340,166,0,0" TextWrapping="Wrap" Width="120"/>
+        <PasswordBox HorizontalAlignment="Left" Style="{StaticResource MaterialDesignPasswordBox}" materialDesign:HintAssist.Hint="Password" VerticalAlignment="Top" Height="23" Margin="340,210,0,0"  Width="120"/>
+        <Button Content="Back" Click="BackToMainWindow" Background="{StaticResource MaterialDesignBodyLight}" HorizontalAlignment="Left" Margin="300,306,0,0" VerticalAlignment="Top" Width="76"/>
+        <Button Content="Login" HorizontalAlignment="Left" Margin="424,306,0,0" VerticalAlignment="Top" Width="76"/>
+
+        <Grid.Background>
+            <ImageBrush ImageSource="../../Resources/bgr.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
+    </Grid>
+</Page>
+
