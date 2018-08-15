@@ -37,7 +37,14 @@ namespace Wallet.Presentation.ViewModel
 
         private void Login(Account account)
         {
-            CredentialService.UnlockAccount(account.Password, account.AccountName);
+            var mnemonic = CredentialService.UnlockAccount(account.Password, account.AccountName);
+            if (mnemonic != "")
+            {
+                var mainWindow = (MainWindow)Application.Current.MainWindow;
+                if (mainWindow == null) return;
+                var page = new SelectCoinPage(mainWindow.Content);
+                mainWindow.Content = page;
+            }
         }
 
         private void CreateAccount(NewAccount account)

@@ -31,14 +31,13 @@ namespace Wallet.Core.CredentialService
             return decryptedBytes.FromBytes();
         }
 
-        public byte[] enc { get; set; }
 
         public bool CreateAccount(string password, string accoutName)
         {
-            var safe = Safe.Create(out var mnemonic, password, "./bitcoin" + accoutName + ".json", Network.TestNet);
+            Safe.Create(out var mnemonic, password, "./bitcoin" + accoutName + ".json", Network.TestNet);
 
             var encryptedMnemonic = Encrypt(mnemonic.ToString(), password);
-            enc = encryptedMnemonic;
+
             File.WriteAllBytes($@".\{accoutName}.txt", encryptedMnemonic);
 
             return true;
@@ -46,7 +45,14 @@ namespace Wallet.Core.CredentialService
 
         public string UnlockAccount(string password, string accountName)
         {
-            return Decrypt(password, accountName);
+            try
+            {
+                return Decrypt(password, accountName);
+            }
+            catch (Exception e)
+            {
+                return "";
+            }
         }
     }
 }

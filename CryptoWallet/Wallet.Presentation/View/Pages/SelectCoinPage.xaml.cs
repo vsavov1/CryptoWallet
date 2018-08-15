@@ -16,12 +16,12 @@ using System.Windows.Shapes;
 namespace Wallet.Presentation.View.Pages
 {
     /// <summary>
-    /// Interaction logic for LoginPage.xaml
+    /// Interaction logic for SelectCoinPage.xaml
     /// </summary>
-    public partial class LoginPage : Page
+    public partial class SelectCoinPage : Page
     {
         public object MainWindow { get; set; }
-        public LoginPage(object mainWindow)
+        public SelectCoinPage(object mainWindow)
         {
             InitializeComponent();
             MainWindow = mainWindow;
@@ -33,9 +33,9 @@ namespace Wallet.Presentation.View.Pages
             if (mainWindow != null) mainWindow.Content = MainWindow;
         }
 
-        private void PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            BindingOperations.GetMultiBindingExpression(LoginBtn, Button.CommandParameterProperty).UpdateTarget();
-        }
+//        private void PasswordChanged(object sender, RoutedEventArgs e)
+//        {
+//            BindingOperations.GetMultiBindingExpression(LoginBtn, Button.CommandParameterProperty).UpdateTarget();
+//        }
     }
 }
