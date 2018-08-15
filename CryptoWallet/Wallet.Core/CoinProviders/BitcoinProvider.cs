@@ -47,7 +47,7 @@ namespace Wallet.Core.CoinProviders
         {
             Safe.Create(out var mnemonic, password, @".\" + walletName + ".json", CurrentNetwork);
             Console.WriteLine($"Mnemonic: {mnemonic}");
-            CredentialService.CredentialService.Encrypt(password, mnemonic.ToString(), walletName);  //WTF  mnemonic.ToString()
+//            CredentialService.CredentialService.Encrypt(password, mnemonic.ToString(), walletName);  //WTF  mnemonic.ToString()
         }
 
         public override void RestoreWallet(string walletName)

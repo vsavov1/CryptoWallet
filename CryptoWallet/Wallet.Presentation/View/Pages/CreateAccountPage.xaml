@@ -3,20 +3,33 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Wallet.Presentation.View.Pages"      
+      xmlns:local="clr-namespace:Wallet.Presentation.View.Pages"    
       xmlns:viewModel="clr-namespace:Wallet.Presentation.ViewModel"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:converters="clr-namespace:Wallet.Presentation.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CreateAccountPage">
-
+    <Page.Resources>
+        <converters:NewAccountConverter x:Key="NewAccountConverter" />
+    </Page.Resources>
     <Grid>
         <TextBlock Margin="300,50,0,0" FontSize="30" TextWrapping="Wrap" Text="Create account" HorizontalAlignment="Left"/>
-        <TextBox HorizontalAlignment="Left" Text="{}" materialDesign:HintAssist.Hint="Account name" VerticalAlignment="Center" Height="23" Margin="340,-100,0,0" TextWrapping="Wrap" Width="120"/>
-        <PasswordBox HorizontalAlignment="Left" Style="{StaticResource MaterialDesignPasswordBox}" materialDesign:HintAssist.Hint="Password" VerticalAlignment="Center" Height="23" Margin="340,-20,0,0"  Width="120"/>
-        <PasswordBox HorizontalAlignment="Left" Style="{StaticResource MaterialDesignPasswordBox}" materialDesign:HintAssist.Hint="Repeat Password" VerticalAlignment="Center" Height="23" Margin="340,60,0,0"  Width="120"/>
+        
+        <TextBox HorizontalAlignment="Left" Name="AccountName" Text="{Binding NewAccount.AccountName}" materialDesign:HintAssist.Hint="Account name" VerticalAlignment="Center" Height="23" Margin="340,-100,0,0" TextWrapping="Wrap" Width="120"/>
+        <PasswordBox PasswordChanged="PasswordChanged" HorizontalAlignment="Left" Name="Password" Style="{StaticResource MaterialDesignPasswordBox}" materialDesign:HintAssist.Hint="Password" VerticalAlignment="Center" Height="23" Margin="340,-20,0,0"  Width="120"/>
+        <PasswordBox PasswordChanged="PasswordChanged" HorizontalAlignment="Left" Name="RepeatPasssword" Style="{StaticResource MaterialDesignPasswordBox}" materialDesign:HintAssist.Hint="Repeat Password" VerticalAlignment="Center" Height="23" Margin="340,60,0,0"  Width="120"/>
+        
         <Button Content="Back" Click="BackToMainWindow" Background="{StaticResource MaterialDesignBodyLight}" HorizontalAlignment="Left" Margin="300,306,0,0" VerticalAlignment="Top" Width="76"/>
-        <Button Content="Create" HorizontalAlignment="Left" Margin="424,306,0,0" VerticalAlignment="Top" Width="76"/>
+        <Button Name="CreateAccountBtn" Content="Create" Command="{Binding CreateAccountCommand}" HorizontalAlignment="Left" Margin="424,306,0,0" VerticalAlignment="Top" Width="76">
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource NewAccountConverter}">
+                    <Binding ElementName="AccountName" Path="Text" />
+                    <Binding ElementName="Password" Path="."/>
+                    <Binding ElementName="RepeatPasssword" Path="."/>
+                </MultiBinding>
+            </Button.CommandParameter>
+        </Button>
 
         <Grid.Background>
             <ImageBrush ImageSource="../../Resources/bgr.jpg" Stretch="UniformToFill"/>

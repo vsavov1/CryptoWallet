@@ -32,5 +32,11 @@ namespace Wallet.Presentation.View.Pages
             var mainWindow = (MainWindow)Application.Current.MainWindow;
             if (mainWindow != null) mainWindow.Content = MainWindow;
         }
+
+        private void PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            var be = BindingOperations.GetMultiBindingExpression(LoginBtn, Button.CommandParameterProperty);
+            be.UpdateTarget();
+        }
     }
 }

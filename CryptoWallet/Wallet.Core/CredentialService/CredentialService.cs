@@ -6,33 +6,47 @@ using System.Threading.Tasks;
 using SecurityDriven.Inferno;
 using SecurityDriven.Inferno.Extensions;
 using System.IO;
+using System.Security;
+using HBitcoin.KeyManagement;
+using NBitcoin;
 
 namespace Wallet.Core.CredentialService
 {
-    public static class CredentialService
+    public class CredentialService : ICredentialService
     {
-        public static void Encrypt(string privateKey, string password, string walletName)
+        private byte[] Encrypt(string text, string password)
         {
-            var keyBytes = privateKey.ToBytes();
+            var keyBytes = text.ToBytes();
             var passwordBytes = password.ToBytes();
             var encryptedKey = SuiteB.Encrypt(passwordBytes, new ArraySegment<byte>(keyBytes));
 
-            SavePassword(encryptedKey, walletName);
+            return encryptedKey;
         }
 
-        public static string Decrypt(string password, string walletName)
+        private string Decrypt(string password, string accoutName)
         {
-            var encryptedWallet = File.ReadAllText($@".\{walletName}.txt");
-            var decryptedBytes =  SuiteB.Decrypt(password.ToBytes(), new ArraySegment<byte>(encryptedWallet.ToBytes()));
+            var encryptedAccount = File.ReadAllBytes($@".\{accoutName}.txt");
+            var decryptedBytes = SuiteB.Decrypt(password.ToBytes(), new ArraySegment<byte>(encryptedAccount));
 
             return decryptedBytes.FromBytes();
         }
 
-        private static void SavePassword(IEnumerable<byte> encrypted, string walletName)
-        {
-            var text = encrypted.Aggregate("", (current, b) => current + b);
+        public byte[] enc { get; set; }
 
-            File.WriteAllText($@".\{walletName}.txt", text);
+        public bool CreateAccount(string password, string accoutName)
+        {
+            var safe = Safe.Create(out var mnemonic, password, "./bitcoin" + accoutName + ".json", Network.TestNet);
+
+            var encryptedMnemonic = Encrypt(mnemonic.ToString(), password);
+            enc = encryptedMnemonic;
+            File.WriteAllBytes($@".\{accoutName}.txt", encryptedMnemonic);
+
+            return true;
+        }
+
+        public string UnlockAccount(string password, string accountName)
+        {
+            return Decrypt(password, accountName);
         }
     }
 }

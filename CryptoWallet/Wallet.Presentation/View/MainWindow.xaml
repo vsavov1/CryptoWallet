@@ -14,8 +14,8 @@
     </Window.DataContext>
 
     <Grid>
-        <Button  HorizontalContentAlignment="Center" Content="Login" Command="{Binding Login}" HorizontalAlignment="Center"  Width="264" Height="70" Margin="264,132,264,217"/>
-        <Button  HorizontalContentAlignment="Center" Content="Create account" Command="{Binding CreateAccount}" HorizontalAlignment="Center" Width="263" Height="70"  Margin="264,230,264,119"/>
+        <Button  HorizontalContentAlignment="Center" Content="Login" Command="{Binding OpenLogin}" HorizontalAlignment="Center"  Width="264" Height="70" Margin="264,132,264,217"/>
+        <Button  HorizontalContentAlignment="Center" Content="Create account" Command="{Binding OpenCreateAccount}" HorizontalAlignment="Center" Width="263" Height="70"  Margin="264,230,264,119"/>
         <TextBlock Margin="205,50,219,324" FontSize="30" TextAlignment="Center" TextWrapping="Wrap" Text="Welcome to CryptoWallet!" HorizontalAlignment="Center" Width="368"/>
         <Grid.Background>
             <ImageBrush ImageSource="../Resources/bgr.jpg" Stretch="UniformToFill"/>
