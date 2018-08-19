@@ -22,6 +22,19 @@ namespace Wallet.Presentation.Converters
                 var password = (values[1] as PasswordBox);
                 var repeatPassword = (values[2] as PasswordBox);
 
+                try
+                {
+                    if (password.Password != repeatPassword.Password)
+                    {
+                        return "password do not match.";
+                    }
+                }
+                catch (Exception e)
+                {
+                    throw;
+                }
+               
+
                 return new NewAccount() { AccountName = accountName, PasswordBox = password , RepeatPasswordBox = repeatPassword };
             }
             catch (Exception e)

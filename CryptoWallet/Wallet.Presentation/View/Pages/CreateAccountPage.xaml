@@ -7,20 +7,46 @@
       xmlns:viewModel="clr-namespace:Wallet.Presentation.ViewModel"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:converters="clr-namespace:Wallet.Presentation.Converters"
+      xmlns:validators="clr-namespace:Wallet.Presentation.Validators"
+      xmlns:model="clr-namespace:Wallet.Presentation.Model"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CreateAccountPage">
+
     <Page.Resources>
+        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedDarkButton}">
+            <Setter Property="IsEnabled" Value="False"/>
+            <Style.Triggers>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=WalletName}" Value="False"/>
+                        <Condition Binding="{Binding ElementName=WalletName, Path=Text.Length, Converter={converters:IsEqualOrGreaterThanConverter}}"  Value="True"/>
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="IsEnabled" Value="True"/>
+                </MultiDataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <model:NewAccount x:Key="NewWallet"/>
         <converters:NewAccountConverter x:Key="NewAccountConverter" />
-    </Page.Resources>
-    <Grid>
+    </Page.Resources>   
+
+    <Grid>   
         <TextBlock Margin="0,50,0,0" FontSize="35" TextWrapping="Wrap" Text="Create account" HorizontalAlignment="Center"/>
+        <TextBox HorizontalAlignment="Center" Name="WalletName" materialDesign:HintAssist.Hint="Account name" VerticalAlignment="Center" Height="33" Margin="0,-90,0,0" TextWrapping="Wrap" Width="200" FontSize="17">
+            <TextBox.Text>
+                <Binding Path="AccountName"  Source="{StaticResource NewWallet}" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay" ValidatesOnDataErrors="True">
+                    <Binding.ValidationRules >
+                        <validators:CreateNewAccountRule />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>     
 
-        <TextBox HorizontalAlignment="Center" Name="AccountName" Text="{Binding NewAccount.AccountName}" materialDesign:HintAssist.Hint="Account name" VerticalAlignment="Center" Height="33" Margin="0,-90,0,0" TextWrapping="Wrap" Width="200" FontSize="17"/>
         <PasswordBox PasswordChanged="PasswordChanged" HorizontalAlignment="Center" Name="Password" Style="{StaticResource MaterialDesignPasswordBox}" materialDesign:HintAssist.Hint="Password" VerticalAlignment="Center" Height="33" Margin="0,-0,0,0" Width="200" FontSize="17"/>
-        <PasswordBox PasswordChanged="PasswordChanged" HorizontalAlignment="Center" Name="RepeatPasssword" Style="{StaticResource MaterialDesignPasswordBox}" materialDesign:HintAssist.Hint="Repeat Password" VerticalAlignment="Center" Height="33" Margin="0,90,0,0"  Width="200" FontSize="17"/>
+        <PasswordBox PasswordChanged="PasswordChanged" HorizontalAlignment="Center" Name="RepeatPasssword" Style="{StaticResource MaterialDesignPasswordBox}" materialDesign:HintAssist.Hint="Confirm Password" VerticalAlignment="Center" Height="33" Margin="0,90,0,0"  Width="200" FontSize="17"/>
 
-        <Button Content="Back" Click="BackToMainWindow" Background="{StaticResource MaterialDesignBodyLight}" HorizontalAlignment="Center" Margin="300,310,424,0" VerticalAlignment="Top" Width="76"/>
+        <Button Content="Back" Style="{StaticResource MaterialDesignRaisedDarkButton}" Click="BackToMainWindow" Background="{StaticResource MaterialDesignBodyLight}" HorizontalAlignment="Center" Margin="300,310,424,0" VerticalAlignment="Top" Width="76"/>
         <Button Name="CreateAccountBtn" Content="Create" Command="{Binding CreateAccountCommand}" HorizontalAlignment="Center" Margin="424,310,300,0" VerticalAlignment="Top" Width="76">
             <Button.CommandParameter>
                 <MultiBinding Converter="{StaticResource NewAccountConverter}">
@@ -35,4 +61,99 @@
             <ImageBrush ImageSource="../../Resources/bgr.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
     </Grid>
-</Page>
+</Page>  
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+

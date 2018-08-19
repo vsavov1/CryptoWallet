@@ -122,9 +122,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\AccountConverter.cs" />
+    <Compile Include="Converters\IsEqualOrGreaterThanConverter.cs" />
     <Compile Include="Converters\NewAccountConverter.cs" />
     <Compile Include="Model\NewAccount.cs" />
     <Compile Include="Model\Account.cs" />
+    <Compile Include="Validators\CreateNewAccountRule.cs" />
+    <Compile Include="Validators\LoginRule.cs" />
     <Compile Include="View\Pages\BitcoinPage.xaml.cs">
       <DependentUpon>BitcoinPage.xaml</DependentUpon>
     </Compile>
