@@ -62,7 +62,6 @@
                     <TextBlock Text="Passwords do not match." HorizontalAlignment="Center" Margin="0,-30,0,0" VerticalAlignment="Center"></TextBlock>
                     <Button Click="CloseError" Content="Close" HorizontalAlignment="Center" Margin="0,40,0,0" VerticalAlignment="Center"/>
                 </Grid>
-
             </materialDesign:DialogHost.DialogContent>
         </materialDesign:DialogHost>
         <Grid.Background>

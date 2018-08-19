@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MaterialDesignThemes.Wpf;
 
 namespace Wallet.Presentation.View.Pages
 {
@@ -36,6 +37,11 @@ namespace Wallet.Presentation.View.Pages
         private void PasswordChanged(object sender, RoutedEventArgs e)
         {
             BindingOperations.GetMultiBindingExpression(LoginBtn, Button.CommandParameterProperty).UpdateTarget();
+        }
+
+        private void CloseError(object sender, RoutedEventArgs e)
+        {
+            PageHelper.FindChild<DialogHost>((MainWindow)Application.Current.MainWindow, "LoginError").IsOpen = false;
         }
     }
 }

@@ -51,6 +51,7 @@ namespace Wallet.Core.CredentialService
             }
             catch (Exception e)
             {
+                throw new Exception("Unlock error.");
                 return "";
             }
         }

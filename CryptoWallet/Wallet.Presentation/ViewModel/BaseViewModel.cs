@@ -44,15 +44,22 @@ namespace Wallet.Presentation.ViewModel
 
         private void Login(Account account)
         {
-            var mnemonic = CredentialService.UnlockAccount(account.PasswordBox.Password.ToString(), account.AccountName);
-            if (mnemonic != "")
+            try
             {
-                var mainWindow = (MainWindow)Application.Current.MainWindow;
-                if (mainWindow == null) return;
-                var page = new SelectCoinPage(mainWindow.Content);
-                mainWindow.Content = page;
-                WalletModel.WalletName = account.AccountName;
-                account.PasswordBox.Clear();
+                var mnemonic = CredentialService.UnlockAccount(account.PasswordBox.Password.ToString(), account.AccountName);
+                if (mnemonic != "")
+                {
+                    var mainWindow = (MainWindow)Application.Current.MainWindow;
+                    if (mainWindow == null) return;
+                    var page = new SelectCoinPage(mainWindow.Content);
+                    mainWindow.Content = page;
+                    WalletModel.WalletName = account.AccountName;
+                    account.PasswordBox.Clear();
+                }
+            }
+            catch (Exception e)
+            {
+                FindChild<DialogHost>((MainWindow)Application.Current.MainWindow, "LoginError").IsOpen = true;
             }
         }
 
