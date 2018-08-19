@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MaterialDesignThemes.Wpf;
+using Wallet.Presentation.ViewModel;
 
 namespace Wallet.Presentation.View.Pages
 {
@@ -35,7 +36,8 @@ namespace Wallet.Presentation.View.Pages
         }
         private void CloseError(object sender, RoutedEventArgs e)
         {
-            PageHelper.FindChild<DialogHost>((MainWindow)Application.Current.MainWindow, "PassWordDontMatch").IsOpen = false;
+            var vm = (BaseViewModel)this.DataContext;
+            vm.PopUpError = false;
         }
 
         private void PasswordChanged(object sender, RoutedEventArgs e)

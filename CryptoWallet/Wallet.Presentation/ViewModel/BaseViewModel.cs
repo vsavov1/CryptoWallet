@@ -59,20 +59,32 @@ namespace Wallet.Presentation.ViewModel
             }
             catch (Exception e)
             {
-                FindChild<DialogHost>((MainWindow)Application.Current.MainWindow, "LoginError").IsOpen = true;
+                PopUpError = true;
+                PopUpErrorMessage = "Wrong password or wallet not found.";
             }
         }
 
         private void CreateAccount(NewAccount account)
         {
-            var passwordErorPopUp = FindChild<DialogHost>((MainWindow)Application.Current.MainWindow, "PassWordDontMatch");
-            if (account.RepeatPasswordBox.Password != Password)
+            if (account.RepeatPasswordBox.Password != account.PasswordBox.Password)
             {
-                passwordErorPopUp.IsOpen = true;
+                PopUpError = true;
+                PopUpErrorMessage = "Passwords mismatch.";
                 return;
             }
 
-            CredentialService.CreateAccount(account.PasswordBox.Password.ToString(), account.AccountName);
+            try
+            {
+                CredentialService.CreateAccount(account.PasswordBox.Password.ToString(), account.AccountName);
+            }
+            catch (Exception e)
+            {
+                PopUpError = true;
+                PopUpErrorMessage = "Wallet name already exists.";
+                return;
+            }
+
+            PageHelper.FindChild<TextBox>((MainWindow)Application.Current.MainWindow, "WalletName").Text = "";
             var mainWindow = (MainWindow)Application.Current.MainWindow;
             if (mainWindow == null) return;
             var page = new SelectCoinPage(mainWindow.Content);
@@ -108,51 +120,31 @@ namespace Wallet.Presentation.ViewModel
                 RaisePropertyChangedEvent("Password");
             }
         }
-
         private string _password;
 
-        public static T FindChild<T>(DependencyObject parent, string childName)
-            where T : DependencyObject
+
+        public bool PopUpError
         {
-            // Confirm parent and childName are valid. 
-            if (parent == null) return null;
-
-            T foundChild = null;
-
-            int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
-            for (int i = 0; i < childrenCount; i++)
+            get => _popUpError;
+            set
             {
-                var child = VisualTreeHelper.GetChild(parent, i);
-                // If the child is not of the request child type child
-                T childType = child as T;
-                if (childType == null)
-                {
-                    // recursively drill down the tree
-                    foundChild = FindChild<T>(child, childName);
-
-                    // If the child is found, break so we do not overwrite the found child. 
-                    if (foundChild != null) break;
-                }
-                else if (!string.IsNullOrEmpty(childName))
-                {
-                    var frameworkElement = child as FrameworkElement;
-                    // If the child's name is set for search
-                    if (frameworkElement != null && frameworkElement.Name == childName)
-                    {
-                        // if the child's name is of the request name
-                        foundChild = (T)child;
-                        break;
-                    }
-                }
-                else
-                {
-                    // child element found.
-                    foundChild = (T)child;
-                    break;
-                }
+                _popUpError = value;
+                RaisePropertyChangedEvent("PopUpError");
             }
-
-            return foundChild;
         }
+
+        private string _popUpErrorMessage;
+
+        public string PopUpErrorMessage
+        {
+            get => _popUpErrorMessage;
+            set
+            {
+                _popUpErrorMessage = value;
+                RaisePropertyChangedEvent("PopUpErrorMessage");
+            }
+        }
+
+        private bool _popUpError;
     }
 }

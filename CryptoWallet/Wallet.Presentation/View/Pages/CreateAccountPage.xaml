@@ -50,17 +50,17 @@
         <Button Name="CreateAccountBtn" Content="Create" Command="{Binding CreateAccountCommand}" HorizontalAlignment="Center" Margin="424,310,300,0" VerticalAlignment="Top" Width="76">
             <Button.CommandParameter>
                 <MultiBinding Converter="{StaticResource NewAccountConverter}">
-                    <Binding ElementName="AccountName" Path="Text" />
+                    <Binding ElementName="WalletName" Path="Text" />
                     <Binding ElementName="Password" Path="."/>
                     <Binding ElementName="RepeatPassword" Path="."/>
                 </MultiBinding>
             </Button.CommandParameter>
         </Button>
-        <materialDesign:DialogHost Name="PassWordDontMatch">
+        <materialDesign:DialogHost Name="PassWordDontMatch" IsOpen="{Binding PopUpError, Mode=TwoWay}">
             <materialDesign:DialogHost.DialogContent >
                 <Grid Height="100" Width="200">
-                    <TextBlock Text="Passwords do not match." HorizontalAlignment="Center" Margin="0,-30,0,0" VerticalAlignment="Center"></TextBlock>
-                    <Button Click="CloseError" Content="Close" HorizontalAlignment="Center" Margin="0,40,0,0" VerticalAlignment="Center"/>
+                    <TextBlock Name="PopUpMessage" TextWrapping="Wrap" TextAlignment="Center" Text="{Binding PopUpErrorMessage, Mode=TwoWay}" HorizontalAlignment="Center" Margin="0,-30,0,0" VerticalAlignment="Center"></TextBlock>
+                    <Button Click="CloseError" Content="Close" HorizontalAlignment="Center" Margin="0,45,0,0" VerticalAlignment="Center"/>
                 </Grid>
             </materialDesign:DialogHost.DialogContent>
         </materialDesign:DialogHost>
