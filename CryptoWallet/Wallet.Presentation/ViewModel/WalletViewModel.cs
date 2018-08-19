@@ -19,15 +19,12 @@ namespace Wallet.Presentation.ViewModel
 {
     public class WalletViewModel : BaseViewModel
     {
-        public WalletModel WalletModel { get; set; }
 
         public WalletViewModel(ICredentialService service) : base(service)
         {
-            WalletModel = new WalletModel();
         }
         public WalletViewModel()
         {
-            WalletModel = new WalletModel();
         }
 
         public ICommand SelectCoin => new RelayCommand<string>(SelectCoinProvider);

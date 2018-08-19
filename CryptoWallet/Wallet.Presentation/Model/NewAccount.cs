@@ -11,6 +11,6 @@ namespace Wallet.Presentation.Model
 {
     public class NewAccount  : Account
     {
-        public string RepeatPassword { get; set; }
+        public PasswordBox RepeatPasswordBox { get; set; }
     }
 }

@@ -140,6 +140,12 @@
     <Compile Include="View\Pages\SelectCoinPage.xaml.cs">
       <DependentUpon>SelectCoinPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UserControls\SelectNetworkUserControl.xaml.cs">
+      <DependentUpon>SelectNetworkUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserControls\WalletNameUserControl.xaml.cs">
+      <DependentUpon>WalletNameUserControl.xaml</DependentUpon>
+    </Compile>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -179,6 +185,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\UserControls\SelectNetworkUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControls\WalletNameUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -213,9 +227,7 @@
       <Name>Wallet.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="View\UserControls\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\bgr.jpg" />
   </ItemGroup>

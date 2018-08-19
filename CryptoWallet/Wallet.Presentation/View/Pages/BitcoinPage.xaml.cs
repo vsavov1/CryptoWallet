@@ -24,14 +24,17 @@ namespace Wallet.Presentation.View.Pages
         public object MainWindow { get; set; }
         public BitcoinPage(object mainWindow)
         {
-            InitializeComponent();
             MainWindow = mainWindow;
+            InitializeComponent();
         }
 
         public void BackToMainWindow(object sender, RoutedEventArgs e)
         {
             var mainWindow = (MainWindow)Application.Current.MainWindow;
-            if (mainWindow != null) mainWindow.Content = MainWindow;
+            if (mainWindow != null)
+            {
+                mainWindow.Content = MainWindow;
+            }
         }
     }
 }

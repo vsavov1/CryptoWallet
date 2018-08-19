@@ -4,6 +4,9 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Wallet.Presentation.View.Pages"
+      xmlns:accountName="clr-namespace:Wallet.Presentation.View.UserControls"
+      xmlns:selectNetwork="clr-namespace:Wallet.Presentation.View.UserControls"    
+      xmlns:viewModel="clr-namespace:Wallet.Presentation.ViewModel"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="BitcoinPage">
@@ -13,7 +16,6 @@
             <Setter Property="Background" Value="LightGray"></Setter>
             <Setter Property="Opacity" Value="0.75"></Setter>
             <Setter Property="BorderBrush" Value="{StaticResource MaterialDesignLightSeparatorBackground}"></Setter>
-            <!-- <Setter Property="Foreground" Value="#fff"></Setter> -->
             <Style.Triggers>
                 <Trigger Property="ItemsControl.AlternationIndex" Value="0">
                     <Setter Property="Background" Value="LightGray"></Setter>
@@ -26,7 +28,7 @@
             </Style.Triggers>
         </Style>
     </Page.Resources>
-    <Grid>
+    <Grid> 
         <Grid.Background>
             <ImageBrush ImageSource="../../Resources/bgr.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
@@ -40,15 +42,35 @@
             <ListBoxItem>ListBox Item #3</ListBoxItem>
             <ListBoxItem>ListBox Item #3</ListBoxItem>
             <ListBoxItem>ListBox Item #1</ListBoxItem>
-
         </ListBox>
+        <accountName:WalletNameUserControl>
+        </accountName:WalletNameUserControl>
+        <selectNetwork:SelectNetworkUserControl>
+        </selectNetwork:SelectNetworkUserControl>
         <Button Content="Receive" HorizontalAlignment="Center" Margin="-150,216,0,0" VerticalAlignment="Top" Width="121"/>
         <Button Content="Send" HorizontalAlignment="Center" Margin="150,217,0,0" VerticalAlignment="Top" Width="121"/>
         <TextBlock HorizontalAlignment="Center" Margin="248,111,257,0" FontSize="35" TextWrapping="Wrap" Padding="15,0,10,0"  Text="5.321512311 BTC" VerticalAlignment="Top" Width="295"/>
         <Image HorizontalAlignment="Left" Source="../../Resources/bitcoin.png" Height="100" Margin="344,15,0,0" VerticalAlignment="Top" Width="100"/>
         <TextBlock HorizontalAlignment="Center" Margin="324,158,309,0" FontSize="25" TextWrapping="Wrap" Padding="15,0,10,0"  Text="31.535 USD" VerticalAlignment="Top" Width="167"/>
-    </Grid>
+        <Button Click="BackToMainWindow" FontSize="12" Content="Back" HorizontalAlignment="Center" Margin="-680,-300,0,0" VerticalAlignment="Center" Width="60" Height="25"/>
+</Grid>
 </Page>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

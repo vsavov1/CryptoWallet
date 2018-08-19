@@ -18,9 +18,10 @@ namespace Wallet.Presentation.Converters
             try
             {
                 var accountName = values[0].ToString();
-                var password = (values[1] as PasswordBox).Password.ToString();
+                var password = (values[1] as PasswordBox);
+                var account = new Account() { AccountName = accountName, PasswordBox = password};
 
-                return new Account() { AccountName = accountName, Password = password };
+                return account;
             }
             catch (Exception e)
             {

@@ -3,7 +3,8 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Wallet.Presentation.View.Pages"
+      xmlns:local="clr-namespace:Wallet.Presentation.View.Pages" 
+      xmlns:accountName="clr-namespace:Wallet.Presentation.View.UserControls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SelectCoinPage">
@@ -18,7 +19,9 @@
 
         <Button Content="" BorderThickness="0" Command="{Binding SelectCoin}" CommandParameter="Bitcoin" Background="{StaticResource AddBitcoinImageBrush}" Margin="214,148,405,125" Height="Auto"/>
         <Button Content="" BorderThickness="0" Background="{StaticResource AddEthereumImageBrush}" Margin="411,147,208,126" Height="Auto"/>
-                     
+        <Button Click="Logout" FontSize="12" Content="Logout" HorizontalAlignment="Center" Margin="-680,-300,0,0" VerticalAlignment="Center" Width="80" Height="25"/>
+        <accountName:WalletNameUserControl>
+        </accountName:WalletNameUserControl>
         <Grid.Background>
             <ImageBrush ImageSource="../../Resources/bgr.jpg" Stretch="UniformToFill"/>
         </Grid.Background>

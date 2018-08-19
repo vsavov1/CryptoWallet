@@ -20,14 +20,19 @@ namespace Wallet.Presentation.ViewModel
 {
     public class BaseViewModel : ObservableObject
     {
+        public WalletModel WalletModel { get; set; }
         public ICredentialService CredentialService { get; set; }
+
         public BaseViewModel(ICredentialService service)
         {
             CredentialService = service;
+            WalletModel = new WalletModel();
         }
 
         public BaseViewModel()
         {
+            WalletModel = new WalletModel();
+            WalletModel.Mainnet = true;
         }
 
         public ICommand OpenCreateAccount => new DelegateCommand(OpenCreateAccountPage);
@@ -37,19 +42,29 @@ namespace Wallet.Presentation.ViewModel
 
         private void Login(Account account)
         {
-            var mnemonic = CredentialService.UnlockAccount(account.Password, account.AccountName);
+            var mnemonic = CredentialService.UnlockAccount(account.PasswordBox.Password.ToString(), account.AccountName);
             if (mnemonic != "")
             {
                 var mainWindow = (MainWindow)Application.Current.MainWindow;
                 if (mainWindow == null) return;
                 var page = new SelectCoinPage(mainWindow.Content);
                 mainWindow.Content = page;
+                WalletModel.WalletName = account.AccountName;
+                account.PasswordBox.Clear();
             }
         }
 
         private void CreateAccount(NewAccount account)
         {
-            CredentialService.CreateAccount(account.Password, account.AccountName);
+            CredentialService.CreateAccount(account.PasswordBox.Password.ToString(), account.AccountName);
+
+            var mainWindow = (MainWindow)Application.Current.MainWindow;
+            if (mainWindow == null) return;
+            var page = new SelectCoinPage(mainWindow.Content);
+            mainWindow.Content = page;
+            WalletModel.WalletName = account.AccountName;
+            account.PasswordBox.Clear();
+            account.RepeatPasswordBox.Clear();
         }
 
         private void OpenCreateAccountPage()

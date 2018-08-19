@@ -19,10 +19,10 @@ namespace Wallet.Presentation.Converters
             try
             {
                 var accountName = values[0].ToString();
-                var password = (values[1] as PasswordBox).Password.ToString();
-                var repeatPassword = (values[2] as PasswordBox).Password.ToString();
+                var password = (values[1] as PasswordBox);
+                var repeatPassword = (values[2] as PasswordBox);
 
-                return new NewAccount() { AccountName = accountName, Password = password , RepeatPassword = repeatPassword };
+                return new NewAccount() { AccountName = accountName, PasswordBox = password , RepeatPasswordBox = repeatPassword };
             }
             catch (Exception e)
             {

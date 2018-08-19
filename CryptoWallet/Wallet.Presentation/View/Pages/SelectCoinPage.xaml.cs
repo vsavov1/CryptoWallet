@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Wallet.Core.CredentialService;
+using Wallet.Presentation.ViewModel;
 
 namespace Wallet.Presentation.View.Pages
 {
@@ -27,15 +29,10 @@ namespace Wallet.Presentation.View.Pages
             MainWindow = mainWindow;
         }
 
-        public void BackToMainWindow(object sender, RoutedEventArgs e)
+        public void Logout(object sender, RoutedEventArgs e)
         {
             var mainWindow = (MainWindow)Application.Current.MainWindow;
             if (mainWindow != null) mainWindow.Content = MainWindow;
         }
-
-//        private void PasswordChanged(object sender, RoutedEventArgs e)
-//        {
-//            BindingOperations.GetMultiBindingExpression(LoginBtn, Button.CommandParameterProperty).UpdateTarget();
-//        }
     }
 }
