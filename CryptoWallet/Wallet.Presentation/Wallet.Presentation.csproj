@@ -140,6 +140,7 @@
     <Compile Include="View\Pages\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Pages\PageHelper.cs" />
     <Compile Include="View\Pages\SelectCoinPage.xaml.cs">
       <DependentUpon>SelectCoinPage.xaml</DependentUpon>
     </Compile>

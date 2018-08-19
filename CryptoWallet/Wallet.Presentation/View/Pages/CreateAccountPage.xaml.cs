@@ -35,44 +35,12 @@ namespace Wallet.Presentation.View.Pages
         }
         private void CloseError(object sender, RoutedEventArgs e)
         {
-            FindChild<DialogHost>((MainWindow)Application.Current.MainWindow, "PassWordDontMatch").IsOpen = false;
+            PageHelper.FindChild<DialogHost>((MainWindow)Application.Current.MainWindow, "PassWordDontMatch").IsOpen = false;
         }
 
         private void PasswordChanged(object sender, RoutedEventArgs e)
         {
             BindingOperations.GetMultiBindingExpression(CreateAccountBtn, Button.CommandParameterProperty).UpdateTarget();
-        }
-
-        public static T FindChild<T>(DependencyObject parent, string childName) where T : DependencyObject
-        {
-            if (parent == null) return null;
-
-            T foundChild = null;
-
-            var childrenCount = VisualTreeHelper.GetChildrenCount(parent);
-            for (var i = 0; i < childrenCount; i++)
-            {
-                var child = VisualTreeHelper.GetChild(parent, i);
-                if (!(child is T childType))
-                {
-                    foundChild = FindChild<T>(child, childName);
-
-                    if (foundChild != null) break;
-                }
-                else if (!string.IsNullOrEmpty(childName))
-                {
-                    if (!(child is FrameworkElement frameworkElement) || frameworkElement.Name != childName) continue;
-                    foundChild = (T)child;
-                    break;
-                }
-                else
-                {
-                    foundChild = (T)child;
-                    break;
-                }
-            }
-
-            return foundChild;
         }
     }
 }
