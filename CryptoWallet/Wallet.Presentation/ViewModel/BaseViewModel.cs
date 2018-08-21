@@ -47,20 +47,19 @@ namespace Wallet.Presentation.ViewModel
             try
             {
                 var mnemonic = CredentialService.UnlockAccount(account.PasswordBox.Password.ToString(), account.AccountName);
-                if (mnemonic != "")
-                {
-                    var mainWindow = (MainWindow)Application.Current.MainWindow;
-                    if (mainWindow == null) return;
-                    var page = new SelectCoinPage(mainWindow.Content);
-                    mainWindow.Content = page;
-                    WalletModel.WalletName = account.AccountName;
-                    account.PasswordBox.Clear();
-                }
+                if (mnemonic == "") return;
+
+                var mainWindow = (MainWindow)Application.Current.MainWindow;
+                if (mainWindow == null) return;
+                var page = new SelectCoinPage(mainWindow.Content);
+                mainWindow.Content = page;
+                WalletModel.WalletName = account.AccountName;
+                account.PasswordBox.Clear();
             }
             catch (Exception e)
             {
                 PopUpError = true;
-                PopUpErrorMessage = "Wrong password or wallet not found.";
+                PopUpErrorMessage = e.Message;
             }
         }
 

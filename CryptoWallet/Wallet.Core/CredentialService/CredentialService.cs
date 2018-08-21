@@ -25,10 +25,27 @@ namespace Wallet.Core.CredentialService
 
         private string Decrypt(string password, string accoutName)
         {
-            var encryptedAccount = File.ReadAllBytes($@".\{accoutName}.txt");
-            var decryptedBytes = SuiteB.Decrypt(password.ToBytes(), new ArraySegment<byte>(encryptedAccount));
+            byte[] encryptedAccount;
+            try
+            {
+                encryptedAccount = File.ReadAllBytes($@".\{accoutName}.txt");
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Wallet not found.");
+            }
 
-            return decryptedBytes.FromBytes();
+
+            try
+            {
+                var decryptedBytes = SuiteB.Decrypt(password.ToBytes(), new ArraySegment<byte>(encryptedAccount));
+
+                return decryptedBytes.FromBytes();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Wrong Password");
+            }
         }
 
 
@@ -45,15 +62,7 @@ namespace Wallet.Core.CredentialService
 
         public string UnlockAccount(string password, string accountName)
         {
-            try
-            {
-                return Decrypt(password, accountName);
-            }
-            catch (Exception e)
-            {
-                throw new Exception("Unlock error.");
-                return "";
-            }
+            return Decrypt(password, accountName);
         }
     }
 }

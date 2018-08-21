@@ -31,7 +31,7 @@
         </Button>
         <materialDesign:DialogHost Name="LoginError" IsOpen="{Binding PopUpError, Mode=TwoWay}">
             <materialDesign:DialogHost.DialogContent>
-                <Grid Height="100" Width="200">
+                <Grid Height="100" Width="250">
                     <TextBlock Name="PopUpMessage" Text="{Binding PopUpErrorMessage, Mode=TwoWay}" HorizontalAlignment="Center" Margin="0,-30,0,0" VerticalAlignment="Center"></TextBlock>
                     <Button Click="CloseError" Content="Close" HorizontalAlignment="Center" Margin="0,40,0,0" VerticalAlignment="Center"/>
                 </Grid>
