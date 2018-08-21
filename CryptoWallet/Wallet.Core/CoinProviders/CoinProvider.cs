@@ -15,5 +15,6 @@ namespace Wallet.Core.CoinProviders
         public abstract void CreateWallet(string walletName);
         public abstract void RestoreWallet(string walletName);
         public abstract void GetBalance();
+        public abstract void SetNetwork(NetworkType network);
     }
 }

@@ -11,8 +11,6 @@ namespace Wallet.Core
     {
         public string mnemonicOrPrivateKey { get; set; }
 
-        public NetworkProvider Network { get; set; }
-
         public Wallet()
         {
             

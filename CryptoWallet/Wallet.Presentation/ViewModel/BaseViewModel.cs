@@ -22,7 +22,6 @@ namespace Wallet.Presentation.ViewModel
 {
     public class BaseViewModel : ObservableObject
     {
-        public WalletModel WalletModel { get; set; }
         public ICredentialService CredentialService { get; set; }
 
         public BaseViewModel(ICredentialService service)
@@ -34,7 +33,6 @@ namespace Wallet.Presentation.ViewModel
         public BaseViewModel()
         {
             WalletModel = new WalletModel();
-            WalletModel.Mainnet = true;
         }
 
         public ICommand OpenCreateAccount => new DelegateCommand(OpenCreateAccountPage);
@@ -53,7 +51,6 @@ namespace Wallet.Presentation.ViewModel
                 if (mainWindow == null) return;
                 var page = new SelectCoinPage(mainWindow.Content);
                 mainWindow.Content = page;
-                WalletModel.WalletName = account.AccountName;
                 account.PasswordBox.Clear();
             }
             catch (Exception e)
@@ -145,5 +142,19 @@ namespace Wallet.Presentation.ViewModel
         }
 
         private bool _popUpError;
+
+        public WalletModel WalletModel
+        {
+            get => _walletModel;
+            set
+            {
+                _walletModel = value;
+                RaisePropertyChangedEvent("WalletModel");
+            }
+        }
+
+        private WalletModel _walletModel;
+
+
     }
 }

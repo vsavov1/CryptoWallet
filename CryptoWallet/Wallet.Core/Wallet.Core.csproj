@@ -173,8 +173,7 @@
     <Compile Include="CoinProviders\BitcoinProvider.cs" />
     <Compile Include="CoinProviders\CoinProvider.cs" />
     <Compile Include="CoinProviders\EthereumProvider.cs" />
-    <Compile Include="CoinProviders\Network\Network.cs" />
-    <Compile Include="CoinProviders\Network\NetworkProvider.cs" />
+    <Compile Include="CoinProviders\NetworkType.cs" />
     <Compile Include="CredentialService\CredentialService.cs" />
     <Compile Include="CredentialService\ICredentialService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -18,9 +18,23 @@ namespace Wallet.Core.CoinProviders
         private string address { get; set; }
         public Network CurrentNetwork { get; set; }
 
-        public BitcoinProvider(global::NBitcoin.Network network)
+        public BitcoinProvider(Network network)
         {
             CurrentNetwork = network;
+
+        }
+
+        public override void SetNetwork(NetworkType network)
+        {
+            switch (network)
+            {
+                case NetworkType.MainNet:
+                    CurrentNetwork = Network.Main;
+                    break;
+                case NetworkType.TestNet:
+                    CurrentNetwork = Network.TestNet;
+                    break;
+            }
         }
 
         public override void SendTransaction()

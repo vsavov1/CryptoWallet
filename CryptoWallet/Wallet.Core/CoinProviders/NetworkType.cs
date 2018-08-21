@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Wallet.Core.CoinProviders
 {
-    public class NBitcoin
+    public enum NetworkType
     {
-        public string Name { get; set; }
-        public string Url { get; set; }
+        MainNet,
+        TestNet
     }
 }
