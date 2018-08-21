@@ -12,12 +12,30 @@ namespace Wallet.Presentation.Model
     {
         public WalletModel()
         {
-            Mainnet = false;
-            Testnet = true;
         }
 
         public CoinProvider CoinProvider { get; set; }
         public string WalletName { get; set; }
+        public string Password { get; set; }
+
+
+        public void SetProvider(CoinProvider coinProvider)
+        {
+            CoinProvider = coinProvider;
+        }
+
+        private decimal _btcValue;
+
+        public decimal BTCValue
+        {
+            get => _btcValue;
+            set
+            {
+                _btcValue = value;
+                RaisePropertyChangedEvent("BTCValue");
+            }
+        }
+
 
         private bool _mainnet;
 
@@ -26,9 +44,13 @@ namespace Wallet.Presentation.Model
             get => _mainnet;
             set
             {
-                CoinProvider?.SetNetwork(value ? NetworkType.MainNet : NetworkType.TestNet);
-                _mainnet = value;
-                RaisePropertyChangedEvent("Mainnet");
+              
+                    CoinProvider?.SetNetwork(value ? NetworkType.MainNet : NetworkType.TestNet);
+                    BTCValue = CoinProvider.GetBalance();
+                    _mainnet = value;
+                    RaisePropertyChangedEvent("Mainnet");
+              
+              
             }
         }
 
@@ -38,9 +60,10 @@ namespace Wallet.Presentation.Model
             get => _testnet;
             set
             {
-                CoinProvider?.SetNetwork(value ? NetworkType.TestNet : NetworkType.MainNet);
-                _testnet = value;
-                RaisePropertyChangedEvent("Testnet");
+               
+                    CoinProvider?.SetNetwork(value ? NetworkType.TestNet : NetworkType.MainNet);
+                    _testnet = value;
+                    RaisePropertyChangedEvent("Testnet");
             }
         }
 

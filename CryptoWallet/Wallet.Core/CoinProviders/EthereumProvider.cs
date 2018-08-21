@@ -38,7 +38,7 @@ namespace Wallet.Core.CoinProviders
             throw new NotImplementedException();
         }
 
-        public override void GetBalance()
+        public override decimal GetBalance()
         {
             throw new NotImplementedException();
         }

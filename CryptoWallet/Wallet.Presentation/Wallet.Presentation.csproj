@@ -122,7 +122,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\AccountConverter.cs" />
-    <Compile Include="Converters\BoolInverterConverter.cs" />
     <Compile Include="Converters\IsEqualOrGreaterThanConverter.cs" />
     <Compile Include="Converters\NewAccountConverter.cs" />
     <Compile Include="Model\NewAccount.cs" />

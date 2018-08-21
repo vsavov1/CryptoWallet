@@ -47,6 +47,9 @@ namespace Wallet.Presentation.ViewModel
                 var mnemonic = CredentialService.UnlockAccount(account.PasswordBox.Password.ToString(), account.AccountName);
                 if (mnemonic == "") return;
 
+                WalletModel.Password = account.PasswordBox.Password;
+                WalletModel.WalletName = account.AccountName;
+
                 var mainWindow = (MainWindow)Application.Current.MainWindow;
                 if (mainWindow == null) return;
                 var page = new SelectCoinPage(mainWindow.Content);

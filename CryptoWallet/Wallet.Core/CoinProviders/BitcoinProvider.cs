@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,9 +13,6 @@ namespace Wallet.Core.CoinProviders
 {
     public class BitcoinProvider : CoinProvider
     {
-        private string walletName { get; set; }
-        private string password { get; set; }
-        private string mnemonic { get; set; }
         private string address { get; set; }
         public Network CurrentNetwork { get; set; }
 
@@ -59,7 +57,7 @@ namespace Wallet.Core.CoinProviders
 
         public override void CreateWallet(string walletName)
         {
-            Safe.Create(out var mnemonic, password, @".\" + walletName + ".json", CurrentNetwork);
+            Safe.Create(out var mnemonic, Password, @".\" + walletName + ".json", CurrentNetwork);
             Console.WriteLine($"Mnemonic: {mnemonic}");
 //            CredentialService.CredentialService.Encrypt(password, mnemonic.ToString(), walletName);  //WTF  mnemonic.ToString()
         }
@@ -68,16 +66,16 @@ namespace Wallet.Core.CoinProviders
         {
 
             //            Safe.Recover(mnemonic, pw, walletFilePath + "RecoverdWallet" + rand.Next(), Network.TestNet, DateTimeOffset.ParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture));
-            Safe.Recover(new Mnemonic(mnemonic), password, $@".\{walletName}", global::NBitcoin.Network.TestNet);
+//            Safe.Recover(new Mnemonic(Mnemonic), password, $@".\{walletName}", global::NBitcoin.Network.TestNet);
 
         }
 
-        public override void GetBalance()
+        public override decimal GetBalance()
         {
-            Safe.Load(password, $@"{walletName}");
-            var client = new QBitNinjaClient(Network.TestNet);
+            var wallet = Safe.Load(Password, Directory.GetCurrentDirectory() + $"\\bitcoin{WalletName}.json");
+            var client = new QBitNinjaClient(CurrentNetwork);
             decimal totalBalance = 0;
-            var balance = client.GetBalance(BitcoinAddress.Create(address, CurrentNetwork), true).Result;
+            var balance = client.GetBalance(BitcoinAddress.Create(wallet.GetAddress(0).ToString(), CurrentNetwork), true).Result;
             foreach (var entry in balance.Operations)
             {
                 foreach (var coin in entry.ReceivedCoins)
@@ -88,7 +86,8 @@ namespace Wallet.Core.CoinProviders
                 }
             }
 
-            Console.WriteLine($"Total balance: {totalBalance}");
+            return totalBalance;
+//            Console.WriteLine($"Total balance: {totalBalance}");
         }
     }
 }

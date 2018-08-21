@@ -14,7 +14,10 @@ namespace Wallet.Core.CoinProviders
         public abstract void GetWalletHistory(); 
         public abstract void CreateWallet(string walletName);
         public abstract void RestoreWallet(string walletName);
-        public abstract void GetBalance();
+        public abstract decimal GetBalance();
         public abstract void SetNetwork(NetworkType network);
+        public string Mnemonic { get; set; }
+        public string Password { get; set; }
+        public string WalletName { get; set; }
     }
 }

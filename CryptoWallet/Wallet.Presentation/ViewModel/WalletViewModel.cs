@@ -34,11 +34,16 @@ namespace Wallet.Presentation.ViewModel
             switch (coin)
             {
                 case "Bitcoin":
+                    WalletModel.SetProvider(new BitcoinProvider(Network.TestNet));
+                    WalletModel.CoinProvider.Password = WalletModel.Password;
+                    WalletModel.CoinProvider.WalletName = WalletModel.WalletName;
+                    WalletModel.BTCValue = WalletModel.CoinProvider.GetBalance();
+
                     var mainWindow = (MainWindow)Application.Current.MainWindow;
                     if (mainWindow == null) return;
                     var page = new BitcoinPage(mainWindow.Content);
                     mainWindow.Content = page;
-                    WalletModel.CoinProvider = new BitcoinProvider(Network.TestNet); //todo
+
                     break;
                 case "Ethereum":
                     //todo
