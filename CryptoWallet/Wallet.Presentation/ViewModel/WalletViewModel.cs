@@ -19,9 +19,32 @@ namespace Wallet.Presentation.ViewModel
 {
     public class WalletViewModel : BaseViewModel
     {
+        private int _loaderProgerss;
+        public int LoaderProgerss
+        {
+            get => _loaderProgerss;
+            set
+            {
+                _loaderProgerss = value;
+                RaisePropertyChangedEvent("LoaderProgerss");
+            }
+        }
+
+        private Visibility _loaderVisibility;
+        public Visibility LoaderVisibility
+        {
+            get => _loaderVisibility;
+            set
+            {
+                _loaderVisibility = value;
+                RaisePropertyChangedEvent("LoaderVisibility");
+            }
+        }
+
 
         public WalletViewModel(ICredentialService service) : base(service)
         {
+            LoaderVisibility = Visibility.Hidden;
         }
         public WalletViewModel()
         {
@@ -43,7 +66,6 @@ namespace Wallet.Presentation.ViewModel
                     if (mainWindow == null) return;
                     var page = new BitcoinPage(mainWindow.Content);
                     mainWindow.Content = page;
-
                     break;
                 case "Ethereum":
                     //todo

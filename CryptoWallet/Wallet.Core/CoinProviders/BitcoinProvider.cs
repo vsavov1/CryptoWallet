@@ -19,7 +19,6 @@ namespace Wallet.Core.CoinProviders
         public BitcoinProvider(Network network)
         {
             CurrentNetwork = network;
-
         }
 
         public override void SetNetwork(NetworkType network)
@@ -70,24 +69,30 @@ namespace Wallet.Core.CoinProviders
 
         }
 
-        public override decimal GetBalance()
+        public  override decimal GetBalance()
         {
-            var wallet = Safe.Load(Password, Directory.GetCurrentDirectory() + $"\\bitcoin{WalletName}.json");
-            var client = new QBitNinjaClient(CurrentNetwork);
-            decimal totalBalance = 0;
-            var balance = client.GetBalance(BitcoinAddress.Create(wallet.GetAddress(0).ToString(), CurrentNetwork), true).Result;
-            foreach (var entry in balance.Operations)
+            try
             {
-                foreach (var coin in entry.ReceivedCoins)
+                var wallet = Safe.Load(Password, Directory.GetCurrentDirectory() + $"\\bitcoin{WalletName}.json");
+                var client = new QBitNinjaClient(CurrentNetwork);
+                decimal totalBalance = 0;
+                var balance = client.GetBalance(BitcoinAddress.Create(wallet.GetAddress(0).ToString(), CurrentNetwork), true).Result;
+                foreach (var entry in balance.Operations)
                 {
-                    var amount = (Money)coin.Amount;
-                    var currentAmount = amount.ToDecimal(MoneyUnit.BTC);
-                    totalBalance += currentAmount;
+                    foreach (var coin in entry.ReceivedCoins)
+                    {
+                        var amount = (Money)coin.Amount;
+                        var currentAmount = amount.ToDecimal(MoneyUnit.BTC);
+                        totalBalance += currentAmount;
+                    }
                 }
-            }
 
-            return totalBalance;
-//            Console.WriteLine($"Total balance: {totalBalance}");
+                return totalBalance;
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
         }
     }
 }

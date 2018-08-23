@@ -62,6 +62,8 @@ namespace Wallet.Presentation.Model
             {
                
                     CoinProvider?.SetNetwork(value ? NetworkType.TestNet : NetworkType.MainNet);
+                    BTCValue = CoinProvider.GetBalance();
+
                     _testnet = value;
                     RaisePropertyChangedEvent("Testnet");
             }

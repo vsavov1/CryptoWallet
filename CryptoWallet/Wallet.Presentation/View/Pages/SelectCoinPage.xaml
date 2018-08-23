@@ -4,7 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Wallet.Presentation.View.Pages" 
-      xmlns:accountName="clr-namespace:Wallet.Presentation.View.UserControls"
+      xmlns:accountName="clr-namespace:Wallet.Presentation.View.UserControls"  
+      xmlns:viewModel="clr-namespace:Wallet.Presentation.ViewModel"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SelectCoinPage">
@@ -22,6 +23,7 @@
         <Button Click="Logout" FontSize="12" Content="Logout" HorizontalAlignment="Center" Margin="-685,-300,0,0" VerticalAlignment="Center" Width="80" Height="25"/>
         <accountName:WalletNameUserControl>
         </accountName:WalletNameUserControl>
+        <ProgressBar Value="0" Visibility="Hidden" Name="Loading" Minimum="0" Maximum="100" HorizontalAlignment="Left" Height="10" Margin="353,350,0,0" VerticalAlignment="Top" Width="100"/>
         <Grid.Background>
             <ImageBrush ImageSource="../../Resources/bgr.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
