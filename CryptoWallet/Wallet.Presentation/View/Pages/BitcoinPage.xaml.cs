@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,6 +36,11 @@ namespace Wallet.Presentation.View.Pages
             {
                 mainWindow.Content = MainWindow;
             }
+        }
+
+        public void Hyperlink_RequestNavigate(object sender, RoutedEventArgs e)
+        {
+            Process.Start("chrome.exe", "https://live.blockcypher.com/btc-testnet/tx/" + ((Hyperlink)sender).NavigateUri);
         }
     }
 }

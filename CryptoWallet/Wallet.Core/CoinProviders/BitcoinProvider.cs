@@ -72,9 +72,29 @@ namespace Wallet.Core.CoinProviders
             throw new NotImplementedException();
         }
 
-        public override void GetWalletHistory()
+        public override List<Transaction> GetWalletHistory()
         {
-            throw new NotImplementedException();
+            var path = Environment.CurrentDirectory + $"\\bitcoin{WalletName}.json";
+
+            Safe.Load(Password, path);
+            var client = new QBitNinjaClient(Network.TestNet);
+            var receivedCoins = client.GetBalance(BitcoinAddress.Create(WalletAddress), true).Result;
+            var txs = new List<Transaction>();
+            foreach (var entry in receivedCoins.Operations)
+            {
+                foreach (var coin in entry.ReceivedCoins)
+                {
+                   txs.Add(
+                       new Transaction()
+                       {
+                           Hash = coin.Outpoint.Hash.ToString(),
+                           Value = decimal.Parse(coin.Amount.ToString()),
+                           Text = $"Transaction ID: {coin.Outpoint.Hash}, received coins {coin.Amount.ToString()}"
+                       });
+                }
+            }
+
+            return txs;
         }
 
         public override void CreateWallet(string walletName)
@@ -100,8 +120,9 @@ namespace Wallet.Core.CoinProviders
                 var wallet = Safe.Load(Password, path);
                 var client = new QBitNinjaClient(CurrentNetwork);
                 decimal totalBalance = 0;
-                var walletAddress = BitcoinAddress.Create(wallet.GetAddress(0).ToString(), CurrentNetwork);
-                var balance = client.GetBalance(walletAddress, true).Result;
+                WalletAddress = wallet.GetAddress(0).ToString();
+                var nbitcoinAddress = BitcoinAddress.Create(WalletAddress, CurrentNetwork);
+                var balance = client.GetBalance(nbitcoinAddress, true).Result;
                 foreach (var entry in balance.Operations)
                 {
                     foreach (var coin in entry.ReceivedCoins)

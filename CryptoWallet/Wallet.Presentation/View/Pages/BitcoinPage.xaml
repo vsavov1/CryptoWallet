@@ -7,6 +7,8 @@
       xmlns:accountName="clr-namespace:Wallet.Presentation.View.UserControls"
       xmlns:selectNetwork="clr-namespace:Wallet.Presentation.View.UserControls"    
       xmlns:viewModel="clr-namespace:Wallet.Presentation.ViewModel"
+      xmlns:system="clr-namespace:System;assembly=mscorlib"
+      xmlns:core="clr-namespace:Wallet.Core;assembly=Wallet.Core"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="BitcoinPage">
@@ -32,16 +34,16 @@
         <Grid.Background>
             <ImageBrush ImageSource="../../Resources/bgr.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
-        <ListBox ScrollViewer.VerticalScrollBarVisibility="Visible"  AlternationCount="2" Height="167" Margin="0,283,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="784">
-            <ListBoxItem>ListBox Item #1</ListBoxItem>
-            <ListBoxItem>ListBox Item #2</ListBoxItem>
-            <ListBoxItem>ListBox Item #3</ListBoxItem>
-            <ListBoxItem>ListBox Item #3</ListBoxItem>
-            <ListBoxItem>ListBox Item #1</ListBoxItem>
-            <ListBoxItem>ListBox Item #2</ListBoxItem>
-            <ListBoxItem>ListBox Item #3</ListBoxItem>
-            <ListBoxItem>ListBox Item #3</ListBoxItem>
-            <ListBoxItem>ListBox Item #1</ListBoxItem>
+        <ListBox ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding WalletModel.Transactions}" AlternationCount="2" Height="167" Margin="0,283,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="784">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="core:Transaction">
+                    <TextBlock>
+                        <Hyperlink NavigateUri="{Binding Hash}" RequestNavigate="Hyperlink_RequestNavigate">
+                            <TextBlock Text="{Binding Text}" />
+                        </Hyperlink>
+                    </TextBlock>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
         </ListBox>
         <accountName:WalletNameUserControl>
         </accountName:WalletNameUserControl>
@@ -53,6 +55,7 @@
         <Image HorizontalAlignment="Left" Source="../../Resources/bitcoin.png" Height="100" Margin="344,15,0,0" VerticalAlignment="Top" Width="100"/>
         <TextBlock HorizontalAlignment="Center" Margin="264,158,264,0" FontSize="25" TextWrapping="Wrap" TextAlignment="Center" Padding="15,0,10,0"  Text="{Binding WalletModel.USDValue}" VerticalAlignment="Top" Width="272"/>
         <Button Click="BackToMainWindow" FontSize="12" Content="Back" HorizontalAlignment="Center" Margin="-680,-300,0,0" VerticalAlignment="Center" Width="60" Height="25"/>
+        <TextBlock HorizontalAlignment="Left" FontSize="15" Margin="20,249,0,0" TextWrapping="Wrap" Text="Transaction History" VerticalAlignment="Top"/>
     </Grid>
 </Page>
 

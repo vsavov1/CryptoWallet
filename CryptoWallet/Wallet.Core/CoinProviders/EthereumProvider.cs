@@ -23,7 +23,7 @@ namespace Wallet.Core.CoinProviders
             throw new NotImplementedException();
         }
 
-        public override void GetWalletHistory()
+        public override List<Transaction> GetWalletHistory()
         {
             throw new NotImplementedException();
         }

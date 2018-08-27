@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wallet.Core;
 using Wallet.Core.CoinProviders;
 using Wallet.Presentation.ViewModel;
 
@@ -45,6 +46,18 @@ namespace Wallet.Presentation.Model
             {
                 _usdValue = value;
                 RaisePropertyChangedEvent("USDValue");
+            }
+        }
+
+        private List<Transaction> _transactions;
+
+        public List<Transaction> Transactions
+        {
+            get => _transactions;
+            set
+            {
+                _transactions = value;
+                RaisePropertyChangedEvent("Transactions");
             }
         }
 

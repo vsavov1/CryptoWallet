@@ -44,7 +44,7 @@ namespace Wallet.Presentation.ViewModel
         {
             try
             {
-                WalletModel.SetProvider(new BitcoinProvider(Network.TestNet));
+                WalletModel.SetProvider(new BitcoinProvider(Network.TestNet){WalletName = account.AccountName, Password = account.PasswordBox.Password });
                 var mnemonic = CredentialService.UnlockAccount(account.PasswordBox.Password, account.AccountName);
                 if (mnemonic == "") return;
                 WalletModel.Password = account.PasswordBox.Password;

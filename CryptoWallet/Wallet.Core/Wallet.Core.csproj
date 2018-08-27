@@ -182,6 +182,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Transaction.cs" />
     <Compile Include="Wallet.cs" />
   </ItemGroup>
   <ItemGroup>

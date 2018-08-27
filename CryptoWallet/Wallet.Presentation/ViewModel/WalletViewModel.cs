@@ -62,6 +62,7 @@ namespace Wallet.Presentation.ViewModel
                     var btcDecimal = WalletModel.CoinProvider.GetBalance();
                     WalletModel.BTCValue = btcDecimal  + " BTC";
                     WalletModel.USDValue = Math.Round(btcDecimal * WalletModel.CoinProvider.GetUSDBalance(), 4) + " USD";
+                    WalletModel.Transactions = WalletModel.CoinProvider.GetWalletHistory();
 
                     var mainWindow = (MainWindow)Application.Current.MainWindow;
                     if (mainWindow == null) return;
