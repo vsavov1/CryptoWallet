@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using SecurityDriven.Inferno;
 using SecurityDriven.Inferno.Extensions;
 using System.IO;
+using System.Net.Mime;
 using System.Security;
 using HBitcoin.KeyManagement;
 using NBitcoin;
@@ -51,7 +52,8 @@ namespace Wallet.Core.CredentialService
 
         public bool CreateAccount(string password, string accoutName)
         {
-            Safe.Create(out var mnemonic, password, "./bitcoin" + accoutName + ".json", Network.TestNet);
+            var path = System.Environment.CurrentDirectory + $"\\bitcoin{accoutName}.json";
+            Safe.Create(out var mnemonic, password, path, Network.TestNet);
 
             var encryptedMnemonic = Encrypt(mnemonic.ToString(), password);
 

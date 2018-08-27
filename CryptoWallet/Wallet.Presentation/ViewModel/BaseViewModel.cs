@@ -44,11 +44,12 @@ namespace Wallet.Presentation.ViewModel
         {
             try
             {
-                var mnemonic = CredentialService.UnlockAccount(account.PasswordBox.Password.ToString(), account.AccountName);
+                WalletModel.SetProvider(new BitcoinProvider(Network.TestNet));
+                var mnemonic = CredentialService.UnlockAccount(account.PasswordBox.Password, account.AccountName);
                 if (mnemonic == "") return;
-
                 WalletModel.Password = account.PasswordBox.Password;
                 WalletModel.WalletName = account.AccountName;
+                WalletModel.Testnet = true;
 
                 var mainWindow = (MainWindow)Application.Current.MainWindow;
                 if (mainWindow == null) return;
@@ -157,7 +158,5 @@ namespace Wallet.Presentation.ViewModel
         }
 
         private WalletModel _walletModel;
-
-
     }
 }

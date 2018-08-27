@@ -43,6 +43,11 @@ namespace Wallet.Core.CoinProviders
             throw new NotImplementedException();
         }
 
+        public override decimal GetUSDBalance()
+        {
+            throw new NotImplementedException();
+        }
+
         public override void SetNetwork(NetworkType network)
         {
             throw new NotImplementedException();

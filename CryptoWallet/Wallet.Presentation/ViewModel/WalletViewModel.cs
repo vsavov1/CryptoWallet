@@ -57,10 +57,11 @@ namespace Wallet.Presentation.ViewModel
             switch (coin)
             {
                 case "Bitcoin":
-                    WalletModel.SetProvider(new BitcoinProvider(Network.TestNet));
                     WalletModel.CoinProvider.Password = WalletModel.Password;
                     WalletModel.CoinProvider.WalletName = WalletModel.WalletName;
-                    WalletModel.BTCValue = WalletModel.CoinProvider.GetBalance();
+                    var btcDecimal = WalletModel.CoinProvider.GetBalance();
+                    WalletModel.BTCValue = btcDecimal  + " BTC";
+                    WalletModel.USDValue = Math.Round(btcDecimal * WalletModel.CoinProvider.GetUSDBalance(), 4) + " USD";
 
                     var mainWindow = (MainWindow)Application.Current.MainWindow;
                     if (mainWindow == null) return;

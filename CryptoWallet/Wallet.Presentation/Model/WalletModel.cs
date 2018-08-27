@@ -24,15 +24,27 @@ namespace Wallet.Presentation.Model
             CoinProvider = coinProvider;
         }
 
-        private decimal _btcValue;
+        private string _btcValue;
 
-        public decimal BTCValue
+        public string BTCValue
         {
             get => _btcValue;
             set
             {
                 _btcValue = value;
                 RaisePropertyChangedEvent("BTCValue");
+            }
+        }
+
+        private string _usdValue;
+
+        public string USDValue
+        {
+            get => _usdValue;
+            set
+            {
+                _usdValue = value;
+                RaisePropertyChangedEvent("USDValue");
             }
         }
 
@@ -44,13 +56,19 @@ namespace Wallet.Presentation.Model
             get => _mainnet;
             set
             {
-              
+                try
+                {
                     CoinProvider?.SetNetwork(value ? NetworkType.MainNet : NetworkType.TestNet);
-                    BTCValue = CoinProvider.GetBalance();
+                    var btcDecimal = CoinProvider.GetBalance();
+                    BTCValue = btcDecimal + " BTC";
+                    USDValue = Math.Round(btcDecimal * CoinProvider.GetUSDBalance(), 4) + " USD";
                     _mainnet = value;
                     RaisePropertyChangedEvent("Mainnet");
-              
-              
+                }
+                catch (Exception e)
+                {
+                    throw;
+                }
             }
         }
 
@@ -60,12 +78,20 @@ namespace Wallet.Presentation.Model
             get => _testnet;
             set
             {
-               
+                try
+                {
                     CoinProvider?.SetNetwork(value ? NetworkType.TestNet : NetworkType.MainNet);
-                    BTCValue = CoinProvider.GetBalance();
-
+                    var btcDecimal = CoinProvider.GetBalance();
+                    BTCValue = btcDecimal + " BTC";
+                    USDValue = Math.Round(btcDecimal * CoinProvider.GetUSDBalance(), 4) + " USD";
                     _testnet = value;
                     RaisePropertyChangedEvent("Testnet");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+               
             }
         }
 

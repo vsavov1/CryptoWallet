@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using HBitcoin.KeyManagement;
 using NBitcoin;
+using Newtonsoft.Json;
 using QBitNinja.Client;
 
 namespace Wallet.Core.CoinProviders
@@ -19,6 +21,27 @@ namespace Wallet.Core.CoinProviders
         public BitcoinProvider(Network network)
         {
             CurrentNetwork = network;
+        }
+
+        public override decimal GetUSDBalance()
+        {
+            var url = "https://api.coinmarketcap.com/v1/ticker/bitcoin/?convert=usd";
+
+            var request = (HttpWebRequest)WebRequest.Create(url);
+            request.ContentType = "application/json; charset=utf-8";
+            request.PreAuthenticate = true;
+            var response = request.GetResponse() as HttpWebResponse;
+            string result;
+            using (var responseStream = response.GetResponseStream())
+            {
+                var reader = new StreamReader(responseStream, Encoding.UTF8);
+                result = reader.ReadToEnd();
+            }
+
+            dynamic dynObj = JsonConvert.DeserializeObject(result);
+
+            return decimal.Parse(dynObj[0].price_usd.ToString());
+
         }
 
         public override void SetNetwork(NetworkType network)
@@ -56,9 +79,9 @@ namespace Wallet.Core.CoinProviders
 
         public override void CreateWallet(string walletName)
         {
-            Safe.Create(out var mnemonic, Password, @".\" + walletName + ".json", CurrentNetwork);
-            Console.WriteLine($"Mnemonic: {mnemonic}");
-//            CredentialService.CredentialService.Encrypt(password, mnemonic.ToString(), walletName);  //WTF  mnemonic.ToString()
+//            Safe.Create(out var mnemonic, Password, @".\" + walletName + ".json", CurrentNetwork);
+//            Console.WriteLine($"Mnemonic: {mnemonic}");
+////            CredentialService.CredentialService.Encrypt(password, mnemonic.ToString(), walletName);  //WTF  mnemonic.ToString()
         }
 
         public override void RestoreWallet(string walletName)
@@ -73,10 +96,12 @@ namespace Wallet.Core.CoinProviders
         {
             try
             {
-                var wallet = Safe.Load(Password, Directory.GetCurrentDirectory() + $"\\bitcoin{WalletName}.json");
+                var path = System.Environment.CurrentDirectory + $"\\bitcoin{WalletName}.json";
+                var wallet = Safe.Load(Password, path);
                 var client = new QBitNinjaClient(CurrentNetwork);
                 decimal totalBalance = 0;
-                var balance = client.GetBalance(BitcoinAddress.Create(wallet.GetAddress(0).ToString(), CurrentNetwork), true).Result;
+                var walletAddress = BitcoinAddress.Create(wallet.GetAddress(0).ToString(), CurrentNetwork);
+                var balance = client.GetBalance(walletAddress, true).Result;
                 foreach (var entry in balance.Operations)
                 {
                     foreach (var coin in entry.ReceivedCoins)
