@@ -13,22 +13,7 @@ namespace Wallet.Core.CoinProviders
             throw new NotImplementedException();
         }
 
-        public override void SignTransaction()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void GetTransaction()
-        {
-            throw new NotImplementedException();
-        }
-
         public override List<Transaction> GetWalletHistory()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void CreateWallet(string walletName)
         {
             throw new NotImplementedException();
         }

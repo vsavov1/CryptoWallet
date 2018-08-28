@@ -64,6 +64,18 @@ namespace Wallet.Presentation.ViewModel
 
         private bool _popUpReceive;
 
+        public bool PopUpSend
+        {
+            get => _popUpSend;
+            set
+            {
+                _popUpSend = value;
+                RaisePropertyChangedEvent("PopUpSend");
+            }
+        }
+
+        private bool _popUpSend;
+
         private void SelectCoinProvider(string coin)
         {
             switch (coin)

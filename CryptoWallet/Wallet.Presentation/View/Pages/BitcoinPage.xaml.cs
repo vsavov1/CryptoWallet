@@ -49,10 +49,22 @@ namespace Wallet.Presentation.View.Pages
             vm.PopUpReceive = false;
         }
 
+        private void ClosePopUpSend(object sender, RoutedEventArgs e)
+        {
+            var vm = (WalletViewModel)this.DataContext;
+            vm.PopUpSend = false;
+        }
+
         private void OpenPopUpReceive(object sender, RoutedEventArgs e)
         {
             var vm = (WalletViewModel)this.DataContext;
             vm.PopUpReceive = true;
+        }
+
+        private void OpenPopUpSend(object sender, RoutedEventArgs e)
+        {
+            var vm = (WalletViewModel)this.DataContext;
+            vm.PopUpSend= true;
         }
     }
 }

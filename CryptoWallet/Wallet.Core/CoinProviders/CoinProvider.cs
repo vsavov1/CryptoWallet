@@ -9,10 +9,7 @@ namespace Wallet.Core.CoinProviders
     public abstract class CoinProvider
     {
         public abstract void SendTransaction();
-        public abstract void SignTransaction();
-        public abstract void GetTransaction();
         public abstract List<Transaction> GetWalletHistory(); 
-        public abstract void CreateWallet(string walletName);
         public abstract void RestoreWallet(string walletName);
         public abstract decimal GetBalance();
         public abstract decimal GetUSDBalance();

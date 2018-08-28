@@ -61,16 +61,6 @@ namespace Wallet.Core.CoinProviders
             throw new NotImplementedException();
         }
 
-        public override void SignTransaction()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void GetTransaction()
-        {
-            throw new NotImplementedException();
-        }
-
         public override List<Transaction> GetWalletHistory()
         {
             var path = Environment.CurrentDirectory + $"\\bitcoin{WalletName}.json";
@@ -94,13 +84,6 @@ namespace Wallet.Core.CoinProviders
             }
 
             return txs;
-        }
-
-        public override void CreateWallet(string walletName)
-        {
-//            Safe.Create(out var mnemonic, Password, @".\" + walletName + ".json", CurrentNetwork);
-//            Console.WriteLine($"Mnemonic: {mnemonic}");
-////            CredentialService.CredentialService.Encrypt(password, mnemonic.ToString(), walletName);  //WTF  mnemonic.ToString()
         }
 
         public override void RestoreWallet(string walletName)
