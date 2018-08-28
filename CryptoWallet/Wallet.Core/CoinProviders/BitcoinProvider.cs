@@ -15,7 +15,6 @@ namespace Wallet.Core.CoinProviders
 {
     public class BitcoinProvider : CoinProvider
     {
-        private string address { get; set; }
         public Network CurrentNetwork { get; set; }
 
         public BitcoinProvider(Network network)

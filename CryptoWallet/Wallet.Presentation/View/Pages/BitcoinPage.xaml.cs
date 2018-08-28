@@ -42,5 +42,17 @@ namespace Wallet.Presentation.View.Pages
         {
             Process.Start("chrome.exe", "https://live.blockcypher.com/btc-testnet/tx/" + ((Hyperlink)sender).NavigateUri);
         }
+
+        private void ClosePopUpReceive(object sender, RoutedEventArgs e)
+        {
+            var vm = (WalletViewModel)this.DataContext;
+            vm.PopUpReceive = false;
+        }
+
+        private void OpenPopUpReceive(object sender, RoutedEventArgs e)
+        {
+            var vm = (WalletViewModel)this.DataContext;
+            vm.PopUpReceive = true;
+        }
     }
 }

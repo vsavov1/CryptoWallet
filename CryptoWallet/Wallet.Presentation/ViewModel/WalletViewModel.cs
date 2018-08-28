@@ -52,6 +52,18 @@ namespace Wallet.Presentation.ViewModel
 
         public ICommand SelectCoin => new RelayCommand<string>(SelectCoinProvider);
 
+        public bool PopUpReceive
+        {
+            get => _popUpReceive;
+            set
+            {
+                _popUpReceive = value;
+                RaisePropertyChangedEvent("PopUpReceive");
+            }
+        }
+
+        private bool _popUpReceive;
+
         private void SelectCoinProvider(string coin)
         {
             switch (coin)
