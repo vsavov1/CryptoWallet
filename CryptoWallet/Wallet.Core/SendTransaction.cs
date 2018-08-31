@@ -10,6 +10,7 @@ namespace Wallet.Core
     {
         public string Receiver { get; set; }
         public Decimal Amount { get; set; }
-        public string Message { get; set; }
+        public string Message { get; set; } 
+        public int Count{ get; set; }
     }
 }

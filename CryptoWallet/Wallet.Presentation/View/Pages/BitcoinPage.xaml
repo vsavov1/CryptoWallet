@@ -37,24 +37,24 @@
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="../../Resources/bgr.jpg" Stretch="UniformToFill"/>
-        </Grid.Background>   
+        </Grid.Background>
 
-        <ListBox ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding WalletModel.Transactions}" AlternationCount="2" Height="167" Margin="0,283,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="784">
+        <ListBox ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding WalletModel.Transactions, Mode=TwoWay}" AlternationCount="2" Margin="8,283,8,10" HorizontalAlignment="Center" Width="784">
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="core:Transaction">
                     <TextBlock>
                         <Hyperlink NavigateUri="{Binding Hash}" RequestNavigate="Hyperlink_RequestNavigate">
-                            <TextBlock Text="{Binding Text}" />
+                            <TextBlock Text="{Binding Text, Mode= TwoWay}" />
                         </Hyperlink>
                     </TextBlock>
                 </DataTemplate>
             </ListBox.ItemTemplate>
-        </ListBox>   
+        </ListBox>
 
         <accountName:WalletNameUserControl>
         </accountName:WalletNameUserControl>
         <selectNetwork:SelectNetworkUserControl>
-        </selectNetwork:SelectNetworkUserControl>       
+        </selectNetwork:SelectNetworkUserControl>
 
         <Button Content="Receive" Click="OpenPopUpReceive" HorizontalAlignment="Center" Margin="-150,216,0,0" VerticalAlignment="Top" Width="121"/>
         <Button Content="Send" Click="OpenPopUpSend" HorizontalAlignment="Center" Margin="150,217,0,0" VerticalAlignment="Top" Width="121"/>
@@ -86,7 +86,7 @@
                     <TextBlock FontSize="20" Text="Amount USD" HorizontalAlignment="Center" Margin="141,-80,0,0" VerticalAlignment="Center"></TextBlock>
                     <TextBox IsReadOnly="True" FontSize="14" Width="112" HorizontalAlignment="Center" Margin="137,-40,0,0" VerticalAlignment="Center"></TextBox>
 
-                    <TextBlock FontSize="20" Text="Message" HorizontalAlignment="Center" Margin="-171,70,0,0" VerticalAlignment="Center"></TextBlock> 
+                    <TextBlock FontSize="20" Text="Message" HorizontalAlignment="Center" Margin="-171,70,0,0" VerticalAlignment="Center"></TextBlock>
                     <TextBox FontSize="14" Name="Message" Text="{Binding NewTransaction.Message}" Width="250" HorizontalAlignment="Center" Margin="0,110,0,0" VerticalAlignment="Center"></TextBox>
 
                     <Button Click="ClosePopUpSend" Width="91" Content="Cancel" HorizontalAlignment="Center" Margin="-160,260,0,0" VerticalAlignment="Center"/>

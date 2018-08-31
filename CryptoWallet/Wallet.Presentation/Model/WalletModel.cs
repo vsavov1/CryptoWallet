@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using Wallet.Core;
 using Wallet.Core.CoinProviders;
 using Wallet.Presentation.ViewModel;
@@ -56,6 +57,7 @@ namespace Wallet.Presentation.Model
             get => _transactions;
             set
             {
+                BindingOperations.EnableCollectionSynchronization(value, this);
                 _transactions = value;
                 RaisePropertyChangedEvent("Transactions");
             }
@@ -72,15 +74,16 @@ namespace Wallet.Presentation.Model
                 try
                 {
                     CoinProvider?.SetNetwork(value ? NetworkType.MainNet : NetworkType.TestNet);
+                    _mainnet = value;
                     var btcDecimal = CoinProvider.GetBalance();
                     BTCValue = btcDecimal + " BTC";
                     USDValue = Math.Round(btcDecimal * CoinProvider.GetUSDBalance(), 4) + " USD";
-                    _mainnet = value;
                     RaisePropertyChangedEvent("Mainnet");
+                    Transactions = new List<Transaction>();
+                    Transactions = CoinProvider.GetWalletHistory();
                 }
                 catch (Exception e)
                 {
-                    throw;
                 }
             }
         }
@@ -94,11 +97,13 @@ namespace Wallet.Presentation.Model
                 try
                 {
                     CoinProvider?.SetNetwork(value ? NetworkType.TestNet : NetworkType.MainNet);
+                    _testnet = value;
                     var btcDecimal = CoinProvider.GetBalance();
                     BTCValue = btcDecimal + " BTC";
                     USDValue = Math.Round(btcDecimal * CoinProvider.GetUSDBalance(), 4) + " USD";
-                    _testnet = value;
                     RaisePropertyChangedEvent("Testnet");
+                    Transactions = new List<Transaction>();
+                    Transactions = CoinProvider.GetWalletHistory();
                 }
                 catch (Exception e)
                 {

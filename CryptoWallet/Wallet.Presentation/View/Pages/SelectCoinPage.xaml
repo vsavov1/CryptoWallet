@@ -20,7 +20,7 @@
 
         <Button Content="" BorderThickness="0" Command="{Binding SelectCoin}" CommandParameter="Bitcoin" Background="{StaticResource AddBitcoinImageBrush}" Margin="214,148,405,125" Height="Auto"/>
         <Button Content="" BorderThickness="0" Background="{StaticResource AddEthereumImageBrush}" Margin="411,147,208,126" Height="Auto"/>
-        <Button Click="Logout" FontSize="12" Content="Logout" HorizontalAlignment="Center" Margin="-685,-300,0,0" VerticalAlignment="Center" Width="80" Height="25"/>
+        <Button Click="Logout" FontSize="12" Content="Logout" HorizontalAlignment="Center" Margin="-670,-300,0,0" VerticalAlignment="Center" Width="80" Height="25"/>
         <accountName:WalletNameUserControl>
         </accountName:WalletNameUserControl>
         <ProgressBar Value="0" Visibility="Hidden" Name="Loading" Minimum="0" Maximum="100" HorizontalAlignment="Left" Height="10" Margin="353,350,0,0" VerticalAlignment="Top" Width="100"/>

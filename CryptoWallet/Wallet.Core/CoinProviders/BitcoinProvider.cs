@@ -60,7 +60,6 @@ namespace Wallet.Core.CoinProviders
             }
         }
 
-
         public Dictionary<BitcoinAddress, List<BalanceOperation>> QueryOperationsPerSafeAddresses(Safe safe, int minUnusedKeys = 7, HdPathType? hdPathType = null)
         {
             if (hdPathType == null)
@@ -308,7 +307,8 @@ namespace Wallet.Core.CoinProviders
                     var transaction = new Transaction();
                     transaction.Hash = getTxResp.TransactionId.ToString();
                     transaction.Text =
-                        $"Transaction ID: {getTxResp.TransactionId}, sent coins {txx.Amount.ToString()}";
+                        $"Transaction ID:${txx.Count}   {getTxResp.TransactionId}, sent coins {txx.Amount.ToString()}, confirms:0";
+
                     transaction.Value = txx.Amount;
 
                     return transaction;
@@ -370,6 +370,7 @@ namespace Wallet.Core.CoinProviders
 
             var orderedTxHistoryRecords = txHistoryRecords
                 .OrderByDescending(x => x.Item1); // Confirmations
+            var count = orderedTxHistoryRecords.Count();
             foreach (var record in orderedTxHistoryRecords)
             {
                 var tx = new Transaction()
@@ -381,11 +382,11 @@ namespace Wallet.Core.CoinProviders
                 if (record.Item2 > 0)
                 {
                     //todo add colors
-                    tx.Text = $"Transaction ID: {record.Item4.ToString()}, received coins {record.Item2.ToString()}, confirms: {record.Item3}";
+                    tx.Text = $"#{count--}   Transaction ID: {record.Item4.ToString()}, received coins {record.Item2.ToString()}, confirms: {record.Item3}";
                 }
                 else if (record.Item2 < 0)
                 {
-                    tx.Text = $"Transaction ID: {record.Item4.ToString()}, sent coins {record.Item2.ToString()}, confirms: {record.Item3}";
+                    tx.Text = $"#{count--}   Transaction ID: {record.Item4.ToString()}, sent coins {record.Item2.ToString()}, confirms: {record.Item3}";
                 }
                 txs.Add(tx);
             }

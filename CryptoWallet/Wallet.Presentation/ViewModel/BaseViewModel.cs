@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using MaterialDesignThemes.Wpf;
@@ -49,7 +50,6 @@ namespace Wallet.Presentation.ViewModel
                 if (mnemonic == "") return;
                 WalletModel.Password = account.PasswordBox.Password;
                 WalletModel.WalletName = account.AccountName;
-                WalletModel.Testnet = true;
 
                 var mainWindow = (MainWindow)Application.Current.MainWindow;
                 if (mainWindow == null) return;
@@ -84,7 +84,6 @@ namespace Wallet.Presentation.ViewModel
                 return;
             }
 
-            PageHelper.FindChild<TextBox>((MainWindow)Application.Current.MainWindow, "WalletName").Text = "";
             var mainWindow = (MainWindow)Application.Current.MainWindow;
             if (mainWindow == null) return;
             var page = new SelectCoinPage(mainWindow.Content);

@@ -82,6 +82,7 @@ namespace Wallet.Presentation.ViewModel
             switch (coin)
             {
                 case "Bitcoin":
+                    WalletModel.Testnet = true;
                     WalletModel.CoinProvider.Password = WalletModel.Password;
                     WalletModel.CoinProvider.WalletName = WalletModel.WalletName;
                     var btcDecimal = WalletModel.CoinProvider.GetBalance();
@@ -107,7 +108,7 @@ namespace Wallet.Presentation.ViewModel
             var txResult = WalletModel.CoinProvider.SendTransaction(tx);
             if (txResult != null)
             {
-                this.WalletModel.Transactions.Add(new Transaction(){Text = txResult.Text, Value = tx.Amount, Hash = txResult.Hash});
+                this.WalletModel.Transactions.Add(new Transaction(){Text = txResult.Text, Value = tx.Amount, Hash = txResult.Hash,  Count = this.WalletModel.Transactions.Count});
             }
         }
     }

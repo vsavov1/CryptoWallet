@@ -11,5 +11,6 @@ namespace Wallet.Core
         public string Hash { get; set; }
         public string Text { get; set; }
         public decimal Value { get; set; }
+        public int Count { get; set; }
     }    
 }
