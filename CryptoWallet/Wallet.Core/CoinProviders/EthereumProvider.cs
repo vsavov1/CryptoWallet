@@ -8,7 +8,7 @@ namespace Wallet.Core.CoinProviders
 {
     public class EthereumProvider : CoinProvider
     {
-        public override void SendTransaction()
+        public override Transaction SendTransaction(SendTransaction tx)
         {
             throw new NotImplementedException();
         }

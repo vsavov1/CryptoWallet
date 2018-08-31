@@ -10,6 +10,7 @@
       xmlns:system="clr-namespace:System;assembly=mscorlib"
       xmlns:core="clr-namespace:Wallet.Core;assembly=Wallet.Core"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:converters="clr-namespace:Wallet.Presentation.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="BitcoinPage">
@@ -30,6 +31,8 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <converters:SendTransactionConverter x:Key="SendTransactionConverter" />
+
     </Page.Resources>
     <Grid>
         <Grid.Background>
@@ -75,19 +78,28 @@
             <materialDesign:DialogHost.DialogContent>
                 <Grid Height="350" Width="450">
                     <TextBlock FontSize="20" Text="Recipient" HorizontalAlignment="Center" Margin="-171,-230,0,0" VerticalAlignment="Center"></TextBlock>
-                    <TextBox FontSize="20" Width="250" HorizontalAlignment="Center" Margin="0,-190,0,0" VerticalAlignment="Center"></TextBox>
+                    <TextBox FontSize="14" Name="Receiver" Text="{Binding NewTransaction.Receiver}"  Width="250" HorizontalAlignment="Center" Margin="0,-190,0,0" VerticalAlignment="Center"></TextBox>
 
-                    <TextBlock FontSize="20" Text="Amount BTC" HorizontalAlignment="Center" Margin="-141,-80,0,0" VerticalAlignment="Center"></TextBlock> 
-                    <TextBox FontSize="20" Width="112" HorizontalAlignment="Center" Margin="-137,-40,0,0" VerticalAlignment="Center"></TextBox>
+                    <TextBlock FontSize="20" Text="Amount BTC" HorizontalAlignment="Center" Margin="-141,-80,0,0" VerticalAlignment="Center"></TextBlock>
+                    <TextBox FontSize="14" Name="Amount" Text="{Binding NewTransaction.Amount}"  Width="112" HorizontalAlignment="Center" Margin="-137,-40,0,0" VerticalAlignment="Center"></TextBox>
 
                     <TextBlock FontSize="20" Text="Amount USD" HorizontalAlignment="Center" Margin="141,-80,0,0" VerticalAlignment="Center"></TextBlock>
-                    <TextBox IsReadOnly="True" FontSize="20" Width="112" HorizontalAlignment="Center" Margin="137,-40,0,0" VerticalAlignment="Center"></TextBox>
+                    <TextBox IsReadOnly="True" FontSize="14" Width="112" HorizontalAlignment="Center" Margin="137,-40,0,0" VerticalAlignment="Center"></TextBox>
 
                     <TextBlock FontSize="20" Text="Message" HorizontalAlignment="Center" Margin="-171,70,0,0" VerticalAlignment="Center"></TextBlock> 
-                    <TextBox FontSize="20" Width="250" HorizontalAlignment="Center" Margin="0,110,0,0" VerticalAlignment="Center"></TextBox>
+                    <TextBox FontSize="14" Name="Message" Text="{Binding NewTransaction.Message}" Width="250" HorizontalAlignment="Center" Margin="0,110,0,0" VerticalAlignment="Center"></TextBox>
 
                     <Button Click="ClosePopUpSend" Width="91" Content="Cancel" HorizontalAlignment="Center" Margin="-160,260,0,0" VerticalAlignment="Center"/>
-                    <Button Width="91" Content="Send" HorizontalAlignment="Center" Margin="160,260,0,0" VerticalAlignment="Center"/>
+                    <Button Name="SendBtn" Width="91" Content="Send" Command="{Binding SendTransaction}" HorizontalAlignment="Center" Margin="160,260,0,0" VerticalAlignment="Center">
+                        <Button.CommandParameter>
+                            <MultiBinding Converter="{StaticResource SendTransactionConverter}">
+                                <Binding ElementName="Receiver" Path="Text" />
+                                <Binding ElementName="Amount" Path="Text"/>
+                                <Binding ElementName="Message" Path="Text"/>
+                            </MultiBinding>
+                        </Button.CommandParameter>
+                    </Button>
+
                 </Grid>
             </materialDesign:DialogHost.DialogContent>
         </materialDesign:DialogHost>

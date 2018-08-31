@@ -13,9 +13,9 @@ namespace Wallet.Presentation.Converters
     {
         public object Convert(object value, Type t, object parameter, CultureInfo culture)
         {
-            int i = 0;
+            var i = 0;
 
-            string s = value as string;
+            var s = value as string;
             if (s != null)
                 int.TryParse(s, out i);
 

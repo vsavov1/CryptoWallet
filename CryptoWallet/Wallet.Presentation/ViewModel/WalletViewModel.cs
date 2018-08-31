@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using NBitcoin;
+using Wallet.Core;
 using Wallet.Core.CoinProviders;
 using Wallet.Core.CredentialService;
 using Wallet.Presentation.Commands;
@@ -50,7 +50,6 @@ namespace Wallet.Presentation.ViewModel
         {
         }
 
-        public ICommand SelectCoin => new RelayCommand<string>(SelectCoinProvider);
 
         public bool PopUpReceive
         {
@@ -76,6 +75,8 @@ namespace Wallet.Presentation.ViewModel
 
         private bool _popUpSend;
 
+        public ICommand SelectCoin => new RelayCommand<string>(SelectCoinProvider);
+
         private void SelectCoinProvider(string coin)
         {
             switch (coin)
@@ -96,6 +97,17 @@ namespace Wallet.Presentation.ViewModel
                 case "Ethereum":
                     //todo
                     break;
+            }
+        }
+
+        public ICommand SendTransaction => new RelayCommand<NewTransaction>(SendTransactionToCoinProvider);
+
+        private void SendTransactionToCoinProvider(NewTransaction tx)
+        {
+            var txResult = WalletModel.CoinProvider.SendTransaction(tx);
+            if (txResult != null)
+            {
+                this.WalletModel.Transactions.Add(new Transaction(){Text = txResult.Text, Value = tx.Amount, Hash = txResult.Hash});
             }
         }
     }
