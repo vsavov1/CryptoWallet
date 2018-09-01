@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using NBitcoin;
 using Wallet.Core;
 using Wallet.Core.CoinProviders;
 using Wallet.Core.CredentialService;
@@ -92,24 +93,34 @@ namespace Wallet.Presentation.ViewModel
 
         private void SelectCoinProvider(string coin)
         {
+            WalletModel.Testnet = true;
+            var mainWindow = (MainWindow)Application.Current.MainWindow;
+            if (mainWindow == null) return;
+
             switch (coin)
             {
                 case "Bitcoin":
-                    WalletModel.Testnet = true;
+                    WalletModel.SetProvider(new BitcoinProvider(Network.TestNet) { WalletName = WalletModel.WalletName, Password = WalletModel.Password });
                     WalletModel.CoinProvider.Password = WalletModel.Password;
                     WalletModel.CoinProvider.WalletName = WalletModel.WalletName;
                     var btcDecimal = WalletModel.CoinProvider.GetBalance();
-                    WalletModel.BTCValue = btcDecimal + " BTC";
+                    WalletModel.Value = btcDecimal + " BTC";
                     WalletModel.USDValue = Math.Round(btcDecimal * WalletModel.CoinProvider.GetUSDBalance(), 4) + " USD";
                     WalletModel.Transactions = WalletModel.CoinProvider.GetWalletHistory();
+                    mainWindow.Content = new BitcoinPage(mainWindow.Content); 
 
-                    var mainWindow = (MainWindow)Application.Current.MainWindow;
-                    if (mainWindow == null) return;
-                    var page = new BitcoinPage(mainWindow.Content);
-                    mainWindow.Content = page;
                     break;
                 case "Ethereum":
-                    //todo
+                    WalletModel.SetProvider(new EthereumProvider() { WalletName = WalletModel.WalletName, Password = WalletModel.Password });
+                    WalletModel.CoinProvider.Password = WalletModel.Password;
+                    WalletModel.CoinProvider.WalletName = WalletModel.WalletName;
+                    var ethDBalance = WalletModel.CoinProvider.GetBalance();
+                    WalletModel.Value = ethDBalance + " ETH";
+                    WalletModel.USDValue = Math.Round(ethDBalance * WalletModel.CoinProvider.GetUSDBalance(), 4) + " USD";
+                    //                    WalletModel.Transactions = WalletModel.CoinProvider.GetWalletHistory();    //todo
+
+                    mainWindow.Content = new BitcoinPage(mainWindow.Content);
+
                     break;
             }
         }

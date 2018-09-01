@@ -19,7 +19,7 @@
         <TextBlock HorizontalAlignment="Center" FontSize="35" Margin="0,50,0,0" TextWrapping="Wrap" Text="Select coin" VerticalAlignment="Top"/>
 
         <Button Content="" BorderThickness="0" Command="{Binding SelectCoin}" CommandParameter="Bitcoin" Background="{StaticResource AddBitcoinImageBrush}" Margin="214,148,405,125" Height="Auto"/>
-        <Button Content="" BorderThickness="0" Background="{StaticResource AddEthereumImageBrush}" Margin="411,147,208,126" Height="Auto"/>
+        <Button Content="" BorderThickness="0" Command="{Binding SelectCoin}" CommandParameter="Ethereum" Background="{StaticResource AddEthereumImageBrush}" Margin="411,147,208,126" Height="Auto"/>
         <Button Click="Logout" FontSize="12" Content="Logout" HorizontalAlignment="Center" Margin="-670,-300,0,0" VerticalAlignment="Center" Width="80" Height="25"/>
         <accountName:WalletNameUserControl>
         </accountName:WalletNameUserControl>

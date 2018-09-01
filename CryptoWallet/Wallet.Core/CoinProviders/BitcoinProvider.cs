@@ -332,7 +332,7 @@ namespace Wallet.Core.CoinProviders
             foreach (var op in opSet)
             {
                 var txId = op.TransactionId;
-                if (operationsPerTransactions.TryGetValue(txId, out List<BalanceOperation> ol))
+                if (operationsPerTransactions.TryGetValue(txId, out var ol))
                 {
                     ol.Add(op);
                     operationsPerTransactions[txId] = ol;

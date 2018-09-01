@@ -8,8 +8,11 @@ using SecurityDriven.Inferno.Extensions;
 using System.IO;
 using System.Net.Mime;
 using System.Security;
+using System.Security.Cryptography;
 using HBitcoin.KeyManagement;
 using NBitcoin;
+using Newtonsoft.Json;
+using Rijndael256;
 
 namespace Wallet.Core.CredentialService
 {
@@ -49,11 +52,36 @@ namespace Wallet.Core.CredentialService
             }
         }
 
+        public void SaveWalletToJsonFile(Nethereum.HdWallet.Wallet wallet, string password, string pathfile)
+        {
+            var words = string.Join(" ", wallet.Words);
+            var encryptedWords = Rijndael256.Rijndael.Encrypt(words, password, KeySize.Aes256);
+            var date = DateTime.Now;
+            var walletJsonData = new { encryptedWords = encryptedWords, date = date };
+            var json = JsonConvert.SerializeObject(walletJsonData);
+
+            File.WriteAllText(pathfile, json);
+        }
 
         public bool CreateAccount(string password, string accoutName)
         {
-            var path = System.Environment.CurrentDirectory + $"\\bitcoin{accoutName}.json";
-            Safe.Create(out var mnemonic, password, path, Network.TestNet);
+            //bitcoin wallet
+            var bitcoinPath = System.Environment.CurrentDirectory + $"\\bitcoin{accoutName}.json";
+            Safe.Create(out var mnemonic, password, bitcoinPath, Network.TestNet);
+
+            //Ethereum wallet
+            var ethereumPath = System.Environment.CurrentDirectory + $"\\ethereum{accoutName}.json";
+            var wallet = new Nethereum.HdWallet.Wallet(Wordlist.English, WordCount.Twelve); 
+//            var words = string.Join(" ", wallet.Words);
+//            var fileName = string.Empty;
+            try
+            {
+                SaveWalletToJsonFile(wallet, password, ethereumPath);
+            }
+            catch (Exception e)
+            {
+            }
+
 
             var encryptedMnemonic = Encrypt(mnemonic.ToString(), password);
 

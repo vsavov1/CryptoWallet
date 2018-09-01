@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Nethereum.Web3;
+using Newtonsoft.Json;
+using Rijndael256;
 
 namespace Wallet.Core.CoinProviders
 {
     public class EthereumProvider : CoinProvider
     {
+        private const string providerUrl = "https://ropsten.infura.io";
         public override Transaction SendTransaction(SendTransaction tx)
         {
             throw new NotImplementedException();
@@ -25,17 +30,46 @@ namespace Wallet.Core.CoinProviders
 
         public override decimal GetBalance()
         {
-            throw new NotImplementedException();
+            var web3 = new Web3(providerUrl);
+            var path = Environment.CurrentDirectory + $"\\ethereum{WalletName}.json";
+            var wallet = LoadWalletFromJsonFile(path, Password);
+            var totalBalance = 0.0m;
+            for (var i = 0; i < 20; i++)
+            {
+                var balance = web3.Eth.GetBalance.SendRequestAsync(wallet.GetAccount(i).Address).Result;
+                var etherAmount = Web3.Convert.FromWei(balance.Value);
+                totalBalance += etherAmount;
+            }
+
+            return totalBalance;
         }
 
         public override decimal GetUSDBalance()
         {
-            throw new NotImplementedException();
+            return 0m; //todo
         }
 
         public override void SetNetwork(NetworkType network)
         {
             throw new NotImplementedException();
+        }
+
+        private Nethereum.HdWallet.Wallet LoadWalletFromJsonFile(string path, string pass)
+        {
+            string words = string.Empty;
+            try
+            {
+                string line = File.ReadAllText(path);
+                dynamic results = JsonConvert.DeserializeObject<dynamic>(line);
+                string encryptedWords = results.encryptedWords;
+                words = Rijndael.Decrypt(encryptedWords, pass, KeySize.Aes256);
+                string dataAndTime = results.date;
+            }
+            catch (Exception e)
+            {
+            }
+
+            return new Nethereum.HdWallet.Wallet(words, null);
         }
     }
 }

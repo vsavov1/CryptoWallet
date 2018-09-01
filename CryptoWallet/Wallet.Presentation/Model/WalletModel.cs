@@ -26,15 +26,15 @@ namespace Wallet.Presentation.Model
             CoinProvider = coinProvider;
         }
 
-        private string _btcValue;
+        private string _value;
 
-        public string BTCValue
+        public string Value
         {
-            get => _btcValue;
+            get => _value;
             set
             {
-                _btcValue = value;
-                RaisePropertyChangedEvent("BTCValue");
+                _value = value;
+                RaisePropertyChangedEvent("Value");
             }
         }
 
@@ -76,7 +76,7 @@ namespace Wallet.Presentation.Model
                     CoinProvider?.SetNetwork(value ? NetworkType.MainNet : NetworkType.TestNet);
                     _mainnet = value;
                     var btcDecimal = CoinProvider.GetBalance();
-                    BTCValue = btcDecimal + " BTC";
+                    Value = btcDecimal + " BTC";
                     USDValue = Math.Round(btcDecimal * CoinProvider.GetUSDBalance(), 4) + " USD";
                     RaisePropertyChangedEvent("Mainnet");
                     Transactions = new List<Transaction>();
@@ -99,7 +99,7 @@ namespace Wallet.Presentation.Model
                     CoinProvider?.SetNetwork(value ? NetworkType.TestNet : NetworkType.MainNet);
                     _testnet = value;
                     var btcDecimal = CoinProvider.GetBalance();
-                    BTCValue = btcDecimal + " BTC";
+                    Value = btcDecimal + " BTC";
                     USDValue = Math.Round(btcDecimal * CoinProvider.GetUSDBalance(), 4) + " USD";
                     RaisePropertyChangedEvent("Testnet");
                     Transactions = new List<Transaction>();
