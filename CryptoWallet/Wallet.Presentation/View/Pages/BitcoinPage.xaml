@@ -62,7 +62,8 @@
         <Image HorizontalAlignment="Left" Source="../../Resources/bitcoin.png" Height="100" Margin="344,15,0,0" VerticalAlignment="Top" Width="100"/>
         <TextBlock HorizontalAlignment="Center" Margin="264,158,264,0" FontSize="25" TextWrapping="Wrap" TextAlignment="Center" Padding="15,0,10,0"  Text="{Binding WalletModel.USDValue}" VerticalAlignment="Top" Width="272"/>
         <Button Click="BackToMainWindow" FontSize="12" Content="Back" HorizontalAlignment="Center" Margin="-680,-300,0,0" VerticalAlignment="Center" Width="60" Height="25"/>
-        <TextBlock HorizontalAlignment="Left" FontSize="15" Margin="20,249,0,0" TextWrapping="Wrap" Text="Transaction History" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" FontSize="15" Margin="8,249,0,0" TextWrapping="Wrap" Text="Transaction History" VerticalAlignment="Top"/>
+        <Button Command="{Binding RefreshHistory}" Content="Refresh" HorizontalAlignment="Center" Margin="-435,110,0,0" VerticalAlignment="Center" Width="60" Height="22" Padding="0"/>
 
         <materialDesign:DialogHost Name="PopUpReceive" IsOpen="{Binding PopUpReceive}">
             <materialDesign:DialogHost.DialogContent>
@@ -81,13 +82,12 @@
                     <TextBox FontSize="14" Name="Receiver" Text="{Binding NewTransaction.Receiver}"  Width="250" HorizontalAlignment="Center" Margin="0,-190,0,0" VerticalAlignment="Center"></TextBox>
 
                     <TextBlock FontSize="20" Text="Amount BTC" HorizontalAlignment="Center" Margin="-141,-80,0,0" VerticalAlignment="Center"></TextBlock>
-                    <TextBox FontSize="14" Name="Amount" Text="{Binding NewTransaction.Amount}"  Width="112" HorizontalAlignment="Center" Margin="-137,-40,0,0" VerticalAlignment="Center"></TextBox>
-
-                    <TextBlock FontSize="20" Text="Amount USD" HorizontalAlignment="Center" Margin="141,-80,0,0" VerticalAlignment="Center"></TextBlock>
-                    <TextBox IsReadOnly="True" FontSize="14" Width="112" HorizontalAlignment="Center" Margin="137,-40,0,0" VerticalAlignment="Center"></TextBox>
+                    <TextBox FontSize="14" Name="Amount" Text="{Binding NewTransaction.Amount}"  Width="250" HorizontalAlignment="Center" Margin="0,-40,0,0" VerticalAlignment="Center"></TextBox>
 
                     <TextBlock FontSize="20" Text="Message" HorizontalAlignment="Center" Margin="-171,70,0,0" VerticalAlignment="Center"></TextBlock>
                     <TextBox FontSize="14" Name="Message" Text="{Binding NewTransaction.Message}" Width="250" HorizontalAlignment="Center" Margin="0,110,0,0" VerticalAlignment="Center"></TextBox>
+
+                    <TextBlock FontSize="14" Foreground="Green" Visibility="{Binding TxStatus}" Name="TxStatus" Text="Transaction sent." Width="250" HorizontalAlignment="Center" Margin="150,190,0,0" VerticalAlignment="Center"></TextBlock>
 
                     <Button Click="ClosePopUpSend" Width="91" Content="Cancel" HorizontalAlignment="Center" Margin="-160,260,0,0" VerticalAlignment="Center"/>
                     <Button Name="SendBtn" Width="91" Content="Send" Command="{Binding SendTransaction}" HorizontalAlignment="Center" Margin="160,260,0,0" VerticalAlignment="Center">

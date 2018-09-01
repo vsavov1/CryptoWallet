@@ -45,6 +45,7 @@ namespace Wallet.Presentation.ViewModel
         public WalletViewModel(ICredentialService service) : base(service)
         {
             LoaderVisibility = Visibility.Hidden;
+            TxStatus = Visibility.Hidden;
         }
         public WalletViewModel()
         {
@@ -73,6 +74,18 @@ namespace Wallet.Presentation.ViewModel
             }
         }
 
+        private Visibility _txStatus;
+
+        public Visibility TxStatus
+        {
+            get => _txStatus;
+            set
+            {
+                _txStatus = value;
+                RaisePropertyChangedEvent("TxStatus");
+            }
+        }
+
         private bool _popUpSend;
 
         public ICommand SelectCoin => new RelayCommand<string>(SelectCoinProvider);
@@ -86,7 +99,7 @@ namespace Wallet.Presentation.ViewModel
                     WalletModel.CoinProvider.Password = WalletModel.Password;
                     WalletModel.CoinProvider.WalletName = WalletModel.WalletName;
                     var btcDecimal = WalletModel.CoinProvider.GetBalance();
-                    WalletModel.BTCValue = btcDecimal  + " BTC";
+                    WalletModel.BTCValue = btcDecimal + " BTC";
                     WalletModel.USDValue = Math.Round(btcDecimal * WalletModel.CoinProvider.GetUSDBalance(), 4) + " USD";
                     WalletModel.Transactions = WalletModel.CoinProvider.GetWalletHistory();
 
@@ -106,10 +119,19 @@ namespace Wallet.Presentation.ViewModel
         private void SendTransactionToCoinProvider(NewTransaction tx)
         {
             var txResult = WalletModel.CoinProvider.SendTransaction(tx);
-            if (txResult != null)
-            {
-                this.WalletModel.Transactions.Add(new Transaction(){Text = txResult.Text, Value = tx.Amount, Hash = txResult.Hash,  Count = this.WalletModel.Transactions.Count});
-            }
+//            if (txResult != null)
+//            {
+//                this.WalletModel.Transactions.Add(new Transaction() { Text = txResult.Text, Value = tx.Amount, Hash = txResult.Hash, Count = this.WalletModel.Transactions.Count });
+//            }
+            TxStatus = Visibility.Visible;
+
+        }
+
+        public ICommand RefreshHistory => new DelegateCommand(ExecuteRefreshHistory);
+
+        private void ExecuteRefreshHistory()
+        {
+            this.WalletModel.Transactions = this.WalletModel.CoinProvider.GetWalletHistory();
         }
     }
 }

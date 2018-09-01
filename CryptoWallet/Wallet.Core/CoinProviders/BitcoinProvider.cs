@@ -221,7 +221,8 @@ namespace Wallet.Core.CoinProviders
                     var result = client.GetAsync(request, HttpCompletionOption.ResponseContentRead).Result;
                     var json = JObject.Parse(result.Content.ReadAsStringAsync().Result);
                     var fastestSatoshiPerByteFee = json.Value<decimal>("fastestFee");
-                    fee = new Money(fastestSatoshiPerByteFee * txSizeInBytes, MoneyUnit.Satoshi);
+                    //                    fee = new Money(fastestSatoshiPerByteFee * txSizeInBytes, MoneyUnit.Satoshi);
+                    fee = new Money(decimal.Parse("0.1"), MoneyUnit.BTC);
                 }
             }
             catch
@@ -319,18 +320,18 @@ namespace Wallet.Core.CoinProviders
         }
 
         public Dictionary<uint256, List<BalanceOperation>> GetOperationsPerTransactions(Dictionary<BitcoinAddress, List<BalanceOperation>> operationsPerAddresses)
-		{
-			var opSet = new HashSet<BalanceOperation>();
-			foreach (var elem in operationsPerAddresses)
-				foreach (var op in elem.Value)
-					opSet.Add(op);
-			if (!opSet.Any()) 
+        {
+            var opSet = new HashSet<BalanceOperation>();
+            foreach (var elem in operationsPerAddresses)
+                foreach (var op in elem.Value)
+                    opSet.Add(op);
+            if (!opSet.Any())
                 return new Dictionary<uint256, List<BalanceOperation>>();
 
-			var operationsPerTransactions = new Dictionary<uint256, List<BalanceOperation>>();
-			foreach (var op in opSet)
-			{
-				var txId = op.TransactionId;
+            var operationsPerTransactions = new Dictionary<uint256, List<BalanceOperation>>();
+            foreach (var op in opSet)
+            {
+                var txId = op.TransactionId;
                 if (operationsPerTransactions.TryGetValue(txId, out List<BalanceOperation> ol))
                 {
                     ol.Add(op);
@@ -339,8 +340,8 @@ namespace Wallet.Core.CoinProviders
                 else operationsPerTransactions.Add(txId, new List<BalanceOperation> { op });
             }
 
-			return operationsPerTransactions;
-		}
+            return operationsPerTransactions;
+        }
 
         public override List<Transaction> GetWalletHistory()
         {
@@ -348,7 +349,7 @@ namespace Wallet.Core.CoinProviders
 
             var safe = Safe.Load(Password, path);
             var txs = new List<Transaction>();
-      
+
             var operationsPerAddresses = QueryOperationsPerSafeAddresses(safe);
             var operationsPerTransactions = GetOperationsPerTransactions(operationsPerAddresses);
 

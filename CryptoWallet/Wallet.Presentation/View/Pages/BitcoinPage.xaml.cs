@@ -53,6 +53,7 @@ namespace Wallet.Presentation.View.Pages
         {
             var vm = (WalletViewModel)this.DataContext;
             vm.PopUpSend = false;
+            vm.TxStatus = Visibility.Hidden;
         }
 
         private void OpenPopUpReceive(object sender, RoutedEventArgs e)
