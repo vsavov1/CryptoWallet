@@ -119,7 +119,7 @@ namespace Wallet.Presentation.ViewModel
                     WalletModel.USDValue = Math.Round(ethDBalance * WalletModel.CoinProvider.GetUSDBalance(), 4) + " USD";
                     //                    WalletModel.Transactions = WalletModel.CoinProvider.GetWalletHistory();    //todo
 
-                    mainWindow.Content = new BitcoinPage(mainWindow.Content);
+                    mainWindow.Content = new EthereumPage(mainWindow.Content);
 
                     break;
             }

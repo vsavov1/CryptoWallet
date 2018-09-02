@@ -57,7 +57,7 @@
         <Button Content="Receive" Click="OpenPopUpReceive" HorizontalAlignment="Center" Margin="-150,216,0,0" VerticalAlignment="Top" Width="121"/>
         <Button Content="Send" Click="OpenPopUpSend" HorizontalAlignment="Center" Margin="150,217,0,0" VerticalAlignment="Top" Width="121"/>
         <TextBlock HorizontalAlignment="Center" Margin="248,111,257,0" FontSize="35" TextWrapping="Wrap" TextAlignment="Center"  Padding="15,0,0,0" Text="{Binding WalletModel.Value}" VerticalAlignment="Top" Width="295"/>
-        <Image HorizontalAlignment="Left" Source="../../Resources/bitcoin.png" Height="100" Margin="344,15,0,0" VerticalAlignment="Top" Width="100"/>
+        <Image HorizontalAlignment="Center" Source="../../Resources/ethereum.png" Height="100" Margin="0,15,0,0" VerticalAlignment="Top" Width="100" />
         <TextBlock HorizontalAlignment="Center" Margin="264,158,264,0" FontSize="25" TextWrapping="Wrap" TextAlignment="Center" Padding="15,0,10,0"  Text="{Binding WalletModel.USDValue}" VerticalAlignment="Top" Width="272"/>
         <Button Click="BackToMainWindow" FontSize="12" Content="Back" HorizontalAlignment="Center" Margin="-680,-300,0,0" VerticalAlignment="Center" Width="60" Height="25"/>
         <TextBlock HorizontalAlignment="Left" FontSize="15" Margin="8,249,0,0" TextWrapping="Wrap" Text="Transaction History" VerticalAlignment="Top"/>

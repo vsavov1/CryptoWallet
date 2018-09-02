@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NBitcoin;
 using Nethereum.Web3;
 using Newtonsoft.Json;
 using Rijndael256;
@@ -12,7 +13,7 @@ namespace Wallet.Core.CoinProviders
 {
     public class EthereumProvider : CoinProvider
     {
-        private const string providerUrl = "https://ropsten.infura.io";
+        public string CurrentNetwork;
         public override Transaction SendTransaction(SendTransaction tx)
         {
             throw new NotImplementedException();
@@ -30,7 +31,7 @@ namespace Wallet.Core.CoinProviders
 
         public override decimal GetBalance()
         {
-            var web3 = new Web3(providerUrl);
+            var web3 = new Web3(CurrentNetwork);
             var path = Environment.CurrentDirectory + $"\\ethereum{WalletName}.json";
             var wallet = LoadWalletFromJsonFile(path, Password);
             var totalBalance = 0.0m;
@@ -51,7 +52,16 @@ namespace Wallet.Core.CoinProviders
 
         public override void SetNetwork(NetworkType network)
         {
-            throw new NotImplementedException();
+
+            switch (network)
+            {
+                case NetworkType.MainNet:
+                    CurrentNetwork = "https://mainnet.infura.io";
+                    break;
+                case NetworkType.TestNet:
+                    CurrentNetwork = "https://ropsten.infura.io";
+                    break;
+            }
         }
 
         private Nethereum.HdWallet.Wallet LoadWalletFromJsonFile(string path, string pass)
