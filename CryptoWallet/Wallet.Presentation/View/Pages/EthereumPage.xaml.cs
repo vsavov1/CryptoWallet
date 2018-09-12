@@ -40,7 +40,7 @@ namespace Wallet.Presentation.View.Pages
 
         public void Hyperlink_RequestNavigate(object sender, RoutedEventArgs e)
         {
-            Process.Start("chrome.exe", "https://live.blockcypher.com/btc-testnet/tx/" + ((Hyperlink)sender).NavigateUri);      //todo
+            Process.Start("chrome.exe", "https://ropsten.etherscan.io/tx/" + ((Hyperlink)sender).NavigateUri);      //todo
         }
 
         private void ClosePopUpReceive(object sender, RoutedEventArgs e)

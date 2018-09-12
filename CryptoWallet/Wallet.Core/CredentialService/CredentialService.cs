@@ -72,8 +72,6 @@ namespace Wallet.Core.CredentialService
             //Ethereum wallet
             var ethereumPath = System.Environment.CurrentDirectory + $"\\ethereum{accoutName}.json";
             var wallet = new Nethereum.HdWallet.Wallet(Wordlist.English, WordCount.Twelve); 
-//            var words = string.Join(" ", wallet.Words);
-//            var fileName = string.Empty;
             try
             {
                 SaveWalletToJsonFile(wallet, password, ethereumPath);

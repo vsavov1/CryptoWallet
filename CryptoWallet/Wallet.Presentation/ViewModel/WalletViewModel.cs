@@ -15,6 +15,7 @@ using Wallet.Core.CredentialService;
 using Wallet.Presentation.Commands;
 using Wallet.Presentation.Model;
 using Wallet.Presentation.View.Pages;
+using NetworkType = Wallet.Core.CoinProviders.NetworkType;
 
 namespace Wallet.Presentation.ViewModel
 {
@@ -111,10 +112,11 @@ namespace Wallet.Presentation.ViewModel
 
                     break;
                 case "Ethereum":
-                    WalletModel.SetProvider(new EthereumProvider() { WalletName = WalletModel.WalletName, Password = WalletModel.Password });
+                    WalletModel.SetProvider(new EthereumProvider(NetworkType.TestNet) { WalletName = WalletModel.WalletName, Password = WalletModel.Password });
                     WalletModel.CoinProvider.Password = WalletModel.Password;
                     WalletModel.CoinProvider.WalletName = WalletModel.WalletName;
                     var ethDBalance = WalletModel.CoinProvider.GetBalance();
+                    WalletModel.Transactions = WalletModel.CoinProvider.GetWalletHistory();
                     WalletModel.Value = ethDBalance + " ETH";
                     WalletModel.USDValue = Math.Round(ethDBalance * WalletModel.CoinProvider.GetUSDBalance(), 4) + " USD";
                     //                    WalletModel.Transactions = WalletModel.CoinProvider.GetWalletHistory();    //todo
