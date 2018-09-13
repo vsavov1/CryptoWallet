@@ -172,7 +172,7 @@ namespace Wallet.Core.CoinProviders
             return haveEnough;
         }
 
-        public override Transaction SendTransaction(SendTransaction txx)
+        public override Task SendTransaction(SendTransaction txx)
         {
             var walletFilePath = System.Environment.CurrentDirectory + $"\\bitcoin{WalletName}.json";
             var safe = Safe.Load(Password, walletFilePath);
@@ -312,7 +312,9 @@ namespace Wallet.Core.CoinProviders
 
                     transaction.Value = txx.Amount;
 
-                    return transaction;
+                    //                    return transaction;    
+                    return new Task(() => {});
+
                 }
             } while (tried <= maxTry);
 

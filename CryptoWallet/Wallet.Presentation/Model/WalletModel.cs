@@ -100,7 +100,7 @@ namespace Wallet.Presentation.Model
                     CoinProvider?.SetNetwork(value ? NetworkType.TestNet : NetworkType.MainNet);
                     _testnet = value;
                     var btcDecimal = CoinProvider.GetBalance();
-                    Value = btcDecimal + $" Coin";
+                    Value = btcDecimal + $" {Coin}";
                     USDValue = Math.Round(btcDecimal * CoinProvider.GetUSDBalance(), 4) + " USD";
                     RaisePropertyChangedEvent("Testnet");
                     Transactions = new List<Transaction>();

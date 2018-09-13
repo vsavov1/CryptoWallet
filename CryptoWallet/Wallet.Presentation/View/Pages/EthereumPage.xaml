@@ -76,14 +76,11 @@
         <materialDesign:DialogHost Name="PopUpSend" IsOpen="{Binding PopUpSend}">
             <materialDesign:DialogHost.DialogContent>
                 <Grid Height="350" Width="450">
-                    <TextBlock FontSize="20" Text="Recipient" HorizontalAlignment="Center" Margin="-171,-230,0,0" VerticalAlignment="Center"></TextBlock>
-                    <TextBox FontSize="14" Name="Receiver" Text="{Binding NewTransaction.Receiver}"  Width="250" HorizontalAlignment="Center" Margin="0,-190,0,0" VerticalAlignment="Center"></TextBox>
+                    <TextBlock FontSize="20" Text="Recipient" HorizontalAlignment="Center" Margin="-171,-180,0,0" VerticalAlignment="Center"></TextBlock>
+                    <TextBox FontSize="14" Name="Receiver" Text="{Binding NewTransaction.Receiver}"  Width="250" HorizontalAlignment="Center" Margin="0,-140,0,0" VerticalAlignment="Center"></TextBox>
 
-                    <TextBlock FontSize="20" Text="Amount BTC" HorizontalAlignment="Center" Margin="-141,-80,0,0" VerticalAlignment="Center"></TextBlock>
-                    <TextBox FontSize="14" Name="Amount" Text="{Binding NewTransaction.Amount}"  Width="250" HorizontalAlignment="Center" Margin="0,-40,0,0" VerticalAlignment="Center"></TextBox>
-
-                    <TextBlock FontSize="20" Text="Message" HorizontalAlignment="Center" Margin="-171,70,0,0" VerticalAlignment="Center"></TextBlock>
-                    <TextBox FontSize="14" Name="Message" Text="{Binding NewTransaction.Message}" Width="250" HorizontalAlignment="Center" Margin="0,110,0,0" VerticalAlignment="Center"></TextBox>
+                    <TextBlock FontSize="20" Text="Amount ETH" HorizontalAlignment="Center" Margin="-141,-30,0,0" VerticalAlignment="Center"></TextBlock>
+                    <TextBox FontSize="14" Name="Amount" Text="{Binding NewTransaction.Amount}"  Width="250" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Center"></TextBox>
 
                     <TextBlock FontSize="14" Foreground="Green" Visibility="{Binding TxStatus}" Name="TxStatus" Text="Transaction sent." Width="250" HorizontalAlignment="Center" Margin="150,190,0,0" VerticalAlignment="Center"></TextBlock>
 

@@ -104,9 +104,10 @@ namespace Wallet.Presentation.ViewModel
                     WalletModel.SetProvider(new BitcoinProvider(Network.TestNet) { WalletName = WalletModel.WalletName, Password = WalletModel.Password });
                     WalletModel.CoinProvider.Password = WalletModel.Password;
                     WalletModel.CoinProvider.WalletName = WalletModel.WalletName;
-                    var btcDecimal = WalletModel.CoinProvider.GetBalance();
-                    WalletModel.Value = btcDecimal + " BTC";
-                    WalletModel.USDValue = Math.Round(btcDecimal * WalletModel.CoinProvider.GetUSDBalance(), 4) + " USD";
+                    //                    var btcDecimal = WalletModel.CoinProvider.GetBalance();
+                    //                    WalletModel.Value = btcDecimal + " BTC";
+                    //                    WalletModel.USDValue = Math.Round(btcDecimal * WalletModel.CoinProvider.GetUSDBalance(), 4) + " USD";
+                    GetAndSetBalances();
                     WalletModel.Transactions = WalletModel.CoinProvider.GetWalletHistory();
                     mainWindow.Content = new BitcoinPage(mainWindow.Content); 
 
@@ -115,11 +116,11 @@ namespace Wallet.Presentation.ViewModel
                     WalletModel.SetProvider(new EthereumProvider(NetworkType.TestNet) { WalletName = WalletModel.WalletName, Password = WalletModel.Password });
                     WalletModel.CoinProvider.Password = WalletModel.Password;
                     WalletModel.CoinProvider.WalletName = WalletModel.WalletName;
-                    var ethDBalance = WalletModel.CoinProvider.GetBalance();
+//                    var ethDBalance = WalletModel.CoinProvider.GetBalance();
                     WalletModel.Transactions = WalletModel.CoinProvider.GetWalletHistory();
-                    WalletModel.Value = ethDBalance + " ETH";
-                    WalletModel.USDValue = Math.Round(ethDBalance * WalletModel.CoinProvider.GetUSDBalance(), 4) + " USD";
-                    //                    WalletModel.Transactions = WalletModel.CoinProvider.GetWalletHistory();    //todo
+                    //                    WalletModel.Value = ethDBalance + " ETH";
+                    //                    WalletModel.USDValue = Math.Round(ethDBalance * WalletModel.CoinProvider.GetUSDBalance(), 4) + " USD";
+                    GetAndSetBalances();
 
                     mainWindow.Content = new EthereumPage(mainWindow.Content);
 
@@ -145,6 +146,14 @@ namespace Wallet.Presentation.ViewModel
         private void ExecuteRefreshHistory()
         {
             this.WalletModel.Transactions = this.WalletModel.CoinProvider.GetWalletHistory();
+            GetAndSetBalances();
+        }
+
+        private void GetAndSetBalances()
+        {
+            var balance = WalletModel.CoinProvider.GetBalance();
+            WalletModel.Value = balance + $" {WalletModel.Coin}";
+            WalletModel.USDValue = Math.Round(balance * WalletModel.CoinProvider.GetUSDBalance(), 4) + " USD";
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Wallet.Core.CoinProviders
 {
     public abstract class CoinProvider
     {
-        public abstract Transaction SendTransaction(SendTransaction tx);
+        public abstract Task SendTransaction(SendTransaction tx);
         public abstract List<Transaction> GetWalletHistory(); 
         public abstract void RestoreWallet(string walletName);
         public abstract decimal GetBalance();

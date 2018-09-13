@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using NBitcoin;
 using Nethereum.Hex.HexTypes;
 using Nethereum.Web3;
+using Nethereum.Web3.Accounts;
 using Newtonsoft.Json;
 using Rijndael256;
 using BigInteger = NBitcoin.BouncyCastle.Math.BigInteger;
@@ -23,19 +24,38 @@ namespace Wallet.Core.CoinProviders
         {
             SetNetwork(network);
         }
-        public override Transaction SendTransaction(SendTransaction tx)
+        public override async Task SendTransaction(SendTransaction tx)
         {
-            throw new NotImplementedException();
+//            var web3 = new Web3(CurrentNetwork);
+            var path = Environment.CurrentDirectory + $"\\ethereum{WalletName}.json";
+            var wallet = LoadWalletFromJsonFile(path, Password);
+
+            Account accountFrom = wallet.GetAccount(0);
+
+            var web3 = new Web3(accountFrom, CurrentNetwork);
+            var wei = Web3.Convert.ToWei(tx.Amount);
+            try
+            {
+                var transaction =
+                     await web3.TransactionManager
+                        .SendTransactionAsync(
+                            accountFrom.Address,
+                            tx.Receiver,
+                            new HexBigInteger(wei));
+                var a = 1;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public override List<Transaction> GetWalletHistory()
         {
             var result = new List<Transaction>();
-            var web3 = new Web3(CurrentNetwork);
             var path = Environment.CurrentDirectory + $"\\ethereum{WalletName}.json";
             var wallet = LoadWalletFromJsonFile(path, Password);
             var url = "https://api-ropsten.etherscan.io/api?module=account&action=txlist&address=" +  wallet.GetAccount(0).Address  + "&startblock=0&endblock=99999999&page=1&offset=10&sort=asc&apikey=YourApiKeyToken";
-
 
             var request = (HttpWebRequest)WebRequest.Create(url);
             request.ContentType = "application/json; charset=utf-8";
@@ -76,11 +96,11 @@ namespace Wallet.Core.CoinProviders
 
                 var bigint = Web3.Convert.FromWei(System.Numerics.BigInteger.Parse(dynObj.result[index].value.ToString()));
 
-                if (dynObj.result[index].from != wallet.GetAccount(0).Address)
+                if (dynObj.result[index].to.ToString() == wallet.GetAccount(0).Address)
                 {
                     tx.Text = $"#{index + 1}   Transaction ID: { dynObj.result[index].hash}, received coins {bigint}, confirms: { dynObj.result[index].confirmations }";
                 }
-                else if (dynObj.result[index].from == wallet.GetAccount(0).Address)
+                else if (dynObj.result[index].to.ToString() != wallet.GetAccount(0).Address)
                 {
                     tx.Text = $"#{index + 1}   Transaction ID: { dynObj.result[index].hash}, sent coins {bigint}, confirms: { dynObj.result[index].confirmations }";
                 }
@@ -103,6 +123,7 @@ namespace Wallet.Core.CoinProviders
             var web3 = new Web3(CurrentNetwork);
             var path = Environment.CurrentDirectory + $"\\ethereum{WalletName}.json";
             var wallet = LoadWalletFromJsonFile(path, Password);
+            WalletAddress = wallet.GetAccount(0).Address;
             var totalBalance = 0.0m;
             for (var i = 0; i < 20; i++)
             {
