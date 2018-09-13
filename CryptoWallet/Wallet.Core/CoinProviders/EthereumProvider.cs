@@ -51,8 +51,6 @@ namespace Wallet.Core.CoinProviders
 
             dynamic dynObj = JsonConvert.DeserializeObject(responseResult);
                                 
-            var tes2t = dynObj.result;
-            var test3 = tes2t[0].value;
             var index = 0;
             while (true)
             {
@@ -80,11 +78,11 @@ namespace Wallet.Core.CoinProviders
 
                 if (dynObj.result[index].from != wallet.GetAccount(0).Address)
                 {
-                    tx.Text = $"#{index}   Transaction ID: { dynObj.result[index].hash}, received coins {bigint}, confirms: { dynObj.result[index].confirmations }";
+                    tx.Text = $"#{index + 1}   Transaction ID: { dynObj.result[index].hash}, received coins {bigint}, confirms: { dynObj.result[index].confirmations }";
                 }
                 else if (dynObj.result[index].from == wallet.GetAccount(0).Address)
                 {
-                    tx.Text = $"#{index--}   Transaction ID: { dynObj.result[index].hash}, sent coins {bigint}, confirms: { dynObj.result[index].confirmations }";
+                    tx.Text = $"#{index + 1}   Transaction ID: { dynObj.result[index].hash}, sent coins {bigint}, confirms: { dynObj.result[index].confirmations }";
                 }
 
                 result.Add(tx);
@@ -118,7 +116,22 @@ namespace Wallet.Core.CoinProviders
 
         public override decimal GetUSDBalance()
         {
-            return 0m; //todo
+            var url = "https://api.coinmarketcap.com/v1/ticker/ethereum/?convert=usd";
+
+            var request = (HttpWebRequest)WebRequest.Create(url);
+            request.ContentType = "application/json; charset=utf-8";
+            request.PreAuthenticate = true;
+            var response = request.GetResponse() as HttpWebResponse;
+            string result;
+            using (var responseStream = response.GetResponseStream())
+            {
+                var reader = new StreamReader(responseStream, Encoding.UTF8);
+                result = reader.ReadToEnd();
+            }
+
+            dynamic dynObj = JsonConvert.DeserializeObject(result);
+
+            return decimal.Parse(dynObj[0].price_usd.ToString());
         }
 
         public override void SetNetwork(NetworkType network)
