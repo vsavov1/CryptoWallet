@@ -37,7 +37,7 @@
             <ImageBrush ImageSource="../../Resources/bgr.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
 
-        <ListBox ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding WalletModel.Transactions, Mode=TwoWay}" AlternationCount="2" Margin="8,283,8,10" HorizontalAlignment="Center" Width="784">
+        <ListBox ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding WalletModel.Transactions, Mode=TwoWay}" AlternationCount="2" Margin="8,283,8,10" HorizontalAlignment="Center" Width="772">
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="core:Transaction">
                     <TextBlock>

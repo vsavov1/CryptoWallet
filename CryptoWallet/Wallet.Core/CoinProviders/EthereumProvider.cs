@@ -19,6 +19,7 @@ namespace Wallet.Core.CoinProviders
     public class EthereumProvider : CoinProvider
     {
         public string CurrentNetwork;
+        public string CurrentNetworkEtherscan;
 
         public EthereumProvider(NetworkType network)
         {
@@ -55,7 +56,7 @@ namespace Wallet.Core.CoinProviders
             var result = new List<Transaction>();
             var path = Environment.CurrentDirectory + $"\\ethereum{WalletName}.json";
             var wallet = LoadWalletFromJsonFile(path, Password);
-            var url = "https://api-ropsten.etherscan.io/api?module=account&action=txlist&address=" +  wallet.GetAccount(0).Address  + "&startblock=0&endblock=99999999&page=1&offset=10&sort=asc&apikey=YourApiKeyToken";
+            var url = CurrentNetworkEtherscan +  wallet.GetAccount(0).Address  + "&startblock=0&endblock=99999999&page=1&offset=10&sort=asc&apikey=YourApiKeyToken";
 
             var request = (HttpWebRequest)WebRequest.Create(url);
             request.ContentType = "application/json; charset=utf-8";
@@ -162,9 +163,13 @@ namespace Wallet.Core.CoinProviders
             {
                 case NetworkType.MainNet:
                     CurrentNetwork = "https://mainnet.infura.io";
+                    CurrentNetworkEtherscan =
+                        "https://etherscan.io/api?module=account&action=txlist&address=";
                     break;
                 case NetworkType.TestNet:
                     CurrentNetwork = "https://ropsten.infura.io";
+                    CurrentNetworkEtherscan =
+                        "https://api-ropsten.etherscan.io/api?module=account&action=txlist&address=";
                     break;
             }
         }

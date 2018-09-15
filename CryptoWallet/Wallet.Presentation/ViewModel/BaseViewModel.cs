@@ -152,7 +152,7 @@ namespace Wallet.Presentation.ViewModel
             set
             {
                 _walletModel = value;
-                RaisePropertyChangedEvent("WalletModel");
+//                RaisePropertyChangedEvent("WalletModel");
             }
         }
 

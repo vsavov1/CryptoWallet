@@ -94,7 +94,7 @@ namespace Wallet.Presentation.ViewModel
 
         private void SelectCoinProvider(string coin)
         {
-            WalletModel.Testnet = true;
+            WalletModel.Network = NetworkType.TestNet;
             var mainWindow = (MainWindow)Application.Current.MainWindow;
             if (mainWindow == null) return;
 
