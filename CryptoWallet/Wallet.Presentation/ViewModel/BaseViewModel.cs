@@ -18,6 +18,7 @@ using Wallet.Core.CredentialService;
 using Wallet.Presentation.Commands;
 using Wallet.Presentation.Model;
 using Wallet.Presentation.View.Pages;
+using NetworkType = Wallet.Core.CoinProviders.NetworkType;
 
 namespace Wallet.Presentation.ViewModel
 {
@@ -29,6 +30,8 @@ namespace Wallet.Presentation.ViewModel
         {
             CredentialService = service;
             WalletModel = new WalletModel();
+            RecoverFailed = Visibility.Hidden;
+            RecoverSuccess = Visibility.Hidden;
         }
 
         public BaseViewModel()
@@ -36,10 +39,12 @@ namespace Wallet.Presentation.ViewModel
             WalletModel = new WalletModel();
         }
 
+        public ICommand OpenRecover => new DelegateCommand(OpenRecoverPage);
         public ICommand OpenCreateAccount => new DelegateCommand(OpenCreateAccountPage);
         public ICommand OpenLogin => new DelegateCommand(OpenLoginPage);
         public ICommand LoginCommand => new RelayCommand<Account>(Login);
         public ICommand CreateAccountCommand => new RelayCommand<NewAccount>(CreateAccount);
+        public ICommand RecoverWalletCommand => new RelayCommand<RecoveryCoinModel>(RecoverWallet);
 
         private void Login(Account account)
         {
@@ -102,6 +107,39 @@ namespace Wallet.Presentation.ViewModel
             mainWindow.Content = page;
         }
 
+        private void OpenRecoverPage()
+        {
+            var mainWindow = (MainWindow)Application.Current.MainWindow;
+            if (mainWindow == null) return;
+            var page = new RecoverWalletPage(mainWindow.Content);
+            page.DataContext = this;
+            mainWindow.Content = page;
+        }
+
+        private void RecoverWallet(RecoveryCoinModel recover)
+        {
+            if (recover.RecoveryCoin == RecoveryCoin.Bitcoin)
+            {
+                WalletModel.CoinProvider = new BitcoinProvider(Network.TestNet);
+            }
+            else
+            {
+                WalletModel.CoinProvider = new EthereumProvider(NetworkType.TestNet);
+            }
+
+            if (WalletModel.CoinProvider.RestoreWallet(recover.WalletName, recover.MnemonicPhrase, recover.PasswordBox.Password))
+            {
+                RecoverSuccess = Visibility.Visible;
+                RecoverFailed = Visibility.Hidden;
+
+            }
+            else
+            {
+                RecoverFailed = Visibility.Visible;
+                RecoverSuccess = Visibility.Hidden;
+            }
+        }
+
         private void OpenLoginPage()
         {
             var mainWindow = (MainWindow)Application.Current.MainWindow;
@@ -120,7 +158,6 @@ namespace Wallet.Presentation.ViewModel
             }
         }
         private string _password;
-
 
         public bool PopUpError
         {
@@ -141,6 +178,30 @@ namespace Wallet.Presentation.ViewModel
             {
                 _popUpErrorMessage = value;
                 RaisePropertyChangedEvent("PopUpErrorMessage");
+            }
+        }
+
+        private Visibility _recoverSuccess;
+
+        public Visibility RecoverSuccess
+        {
+            get => _recoverSuccess;
+            set
+            {
+                _recoverSuccess = value;
+                RaisePropertyChangedEvent("RecoverSuccess");
+            }
+        }
+
+        private Visibility _recoverFailed;
+
+        public Visibility RecoverFailed
+        {
+            get => _recoverFailed;
+            set
+            {
+                _recoverFailed = value;
+                RaisePropertyChangedEvent("RecoverFailed");
             }
         }
 

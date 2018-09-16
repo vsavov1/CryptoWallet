@@ -64,56 +64,6 @@ namespace Wallet.Presentation.Model
             }
         }
 
-
-//        private bool _mainnet;
-//
-//        public bool Mainnet
-//        {
-//            get => _mainnet;
-//            set
-//            {
-//                try
-//                {
-//                    Transactions = new List<Transaction>();
-//                    CoinProvider?.SetNetwork(value ? NetworkType.MainNet : NetworkType.TestNet);
-//                    _mainnet = value;
-//                    var btcDecimal = CoinProvider.GetBalance();
-//                    Value = btcDecimal + $" {Coin}";
-//                    USDValue = Math.Round(btcDecimal * CoinProvider.GetUSDBalance(), 4) + " USD";
-//                    RaisePropertyChangedEvent("Mainnet");
-//                    Transactions = CoinProvider.GetWalletHistory();
-//                }
-//                catch (Exception e)
-//                {
-//                }
-//            }
-//        }
-//
-//        private bool _testnet;
-//        public bool Testnet
-//        {
-//            get => _testnet;
-//            set
-//            {
-//                try
-//                {
-//                    CoinProvider?.SetNetwork(value ? NetworkType.TestNet : NetworkType.MainNet);
-//                    _testnet = value;
-//                    var btcDecimal = CoinProvider.GetBalance();
-//                    Value = btcDecimal + $" {Coin}";
-//                    USDValue = Math.Round(btcDecimal * CoinProvider.GetUSDBalance(), 4) + " USD";
-//                    RaisePropertyChangedEvent("Testnet");
-//                    Transactions = new List<Transaction>();
-//                    Transactions = CoinProvider.GetWalletHistory();
-//                }
-//                catch (Exception e)
-//                {
-//                    Console.WriteLine(e);
-//                }
-//               
-//            }
-//        }
-
         private NetworkType _network;
         public NetworkType Network
         {
@@ -124,12 +74,42 @@ namespace Wallet.Presentation.Model
                 {
                     CoinProvider?.SetNetwork(value == NetworkType.TestNet ? NetworkType.TestNet : NetworkType.MainNet);
                     _network = value;
+
+                    if (CoinProvider.WalletName == null)
+                    {
+                        return;
+                    }
                     var btcDecimal = CoinProvider.GetBalance();
                     Value = btcDecimal + $" {Coin}";
                     USDValue = Math.Round(btcDecimal * CoinProvider.GetUSDBalance(), 4) + " USD";
                     RaisePropertyChangedEvent("Network");
                     Transactions = new List<Transaction>();
                     Transactions = CoinProvider.GetWalletHistory();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+
+            }
+        }
+
+        private RecoveryCoin _recoveryCoin;
+        public RecoveryCoin RecoveryCoin
+        {
+            get => _recoveryCoin;
+            set
+            {
+                try
+                {
+                    //                    CoinProvider?.SetNetwork(value == NetworkType.TestNet ? NetworkType.TestNet : NetworkType.MainNet);
+                    _recoveryCoin = value;
+//                    var btcDecimal = CoinProvider.GetBalance();
+//                    Value = btcDecimal + $" {Coin}";
+//                    USDValue = Math.Round(btcDecimal * CoinProvider.GetUSDBalance(), 4) + " USD";
+                    RaisePropertyChangedEvent("RecoveryCoin");
+//                    Transactions = new List<Transaction>();
+//                    Transactions = CoinProvider.GetWalletHistory();
                 }
                 catch (Exception e)
                 {

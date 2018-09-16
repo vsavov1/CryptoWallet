@@ -20,10 +20,12 @@ namespace Wallet.Core.CoinProviders
     public class BitcoinProvider : CoinProvider
     {
         public Network CurrentNetwork { get; set; }
+        public CredentialService.CredentialService CredentialService { get; set; }
 
         public BitcoinProvider(Network network)
         {
             CurrentNetwork = network;
+            CredentialService = new CredentialService.CredentialService();
         }
 
         public override decimal GetUSDBalance()
@@ -397,12 +399,20 @@ namespace Wallet.Core.CoinProviders
             return txs;
         }
 
-        public override void RestoreWallet(string walletName)
+        public override bool RestoreWallet(string walletName, string words, string password)
         {
+            try
+            {
+                var bitcoinPath = Environment.CurrentDirectory + $"\\bitcoin{walletName}.json";
+                Safe.Recover(new Mnemonic(words), password, bitcoinPath, Network.TestNet);
+                CredentialService.CreateSimpleAccount(password, walletName, words);
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
 
-            //            Safe.Recover(mnemonic, pw, walletFilePath + "RecoverdWallet" + rand.Next(), Network.TestNet, DateTimeOffset.ParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture));
-            //            Safe.Recover(new Mnemonic(Mnemonic), password, $@".\{walletName}", global::NBitcoin.Network.TestNet);
-
+            return true;
         }
 
         public override decimal GetBalance()

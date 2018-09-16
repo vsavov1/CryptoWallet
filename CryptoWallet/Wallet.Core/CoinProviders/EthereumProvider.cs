@@ -20,14 +20,16 @@ namespace Wallet.Core.CoinProviders
     {
         public string CurrentNetwork;
         public string CurrentNetworkEtherscan;
+        public CredentialService.CredentialService CredentialService { get; set; }
 
         public EthereumProvider(NetworkType network)
         {
             SetNetwork(network);
+            CredentialService = new CredentialService.CredentialService(); ;
         }
         public override async Task SendTransaction(SendTransaction tx)
         {
-//            var web3 = new Web3(CurrentNetwork);
+            //            var web3 = new Web3(CurrentNetwork);
             var path = Environment.CurrentDirectory + $"\\ethereum{WalletName}.json";
             var wallet = LoadWalletFromJsonFile(path, Password);
 
@@ -56,7 +58,7 @@ namespace Wallet.Core.CoinProviders
             var result = new List<Transaction>();
             var path = Environment.CurrentDirectory + $"\\ethereum{WalletName}.json";
             var wallet = LoadWalletFromJsonFile(path, Password);
-            var url = CurrentNetworkEtherscan +  wallet.GetAccount(0).Address  + "&startblock=0&endblock=99999999&page=1&offset=10&sort=asc&apikey=YourApiKeyToken";
+            var url = CurrentNetworkEtherscan + wallet.GetAccount(0).Address + "&startblock=0&endblock=99999999&page=1&offset=10&sort=asc&apikey=YourApiKeyToken";
 
             var request = (HttpWebRequest)WebRequest.Create(url);
             request.ContentType = "application/json; charset=utf-8";
@@ -71,7 +73,7 @@ namespace Wallet.Core.CoinProviders
             }
 
             dynamic dynObj = JsonConvert.DeserializeObject(responseResult);
-                                
+
             var index = 0;
             while (true)
             {
@@ -88,7 +90,7 @@ namespace Wallet.Core.CoinProviders
                 }
 
 
-                var tx =(new Transaction()
+                var tx = (new Transaction()
                 {
                     Hash = dynObj.result[index].hash,
                     Value = dynObj.result[index].value,
@@ -114,9 +116,21 @@ namespace Wallet.Core.CoinProviders
             return result;
         }
 
-        public override void RestoreWallet(string walletName)
+        public override bool RestoreWallet(string walletName, string words, string password)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var wallet = new Nethereum.HdWallet.Wallet(words, null);
+                var ethereumPath = System.Environment.CurrentDirectory + $"\\ethereum{walletName}.json";
+                CredentialService.SaveWalletToJsonFile(wallet, password, ethereumPath);
+                CredentialService.CreateSimpleAccount(password, walletName, words);
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+         
+            return true;
         }
 
         public override decimal GetBalance()
@@ -183,7 +197,7 @@ namespace Wallet.Core.CoinProviders
                 dynamic results = JsonConvert.DeserializeObject<dynamic>(line);
                 string encryptedWords = results.encryptedWords;
                 words = Rijndael.Decrypt(encryptedWords, pass, KeySize.Aes256);
-//                string dataAndTime = results.date;
+                //                string dataAndTime = results.date;
             }
             catch (Exception e)
             {

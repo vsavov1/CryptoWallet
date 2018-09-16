@@ -130,10 +130,13 @@
     <Compile Include="Converters\EnumBooleanConverter.cs" />
     <Compile Include="Converters\IsEqualOrGreaterThanConverter.cs" />
     <Compile Include="Converters\NewAccountConverter.cs" />
+    <Compile Include="Converters\RecoverWalletConverter.cs" />
     <Compile Include="Converters\SendTransactionConverter.cs" />
     <Compile Include="Model\NewAccount.cs" />
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\NewTransaction.cs" />
+    <Compile Include="Model\RecoveryCoin.cs" />
+    <Compile Include="Model\RecoveryCoinModel.cs" />
     <Compile Include="Validators\CreateNewAccountRule.cs" />
     <Compile Include="Validators\LoginRule.cs" />
     <Compile Include="View\Pages\BitcoinPage.xaml.cs">
@@ -149,6 +152,9 @@
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Pages\PageHelper.cs" />
+    <Compile Include="View\Pages\RecoverWalletPage.xaml.cs">
+      <DependentUpon>RecoverWalletPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Pages\SelectCoinPage.xaml.cs">
       <DependentUpon>SelectCoinPage.xaml</DependentUpon>
     </Compile>
@@ -190,6 +196,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Pages\LoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Pages\RecoverWalletPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

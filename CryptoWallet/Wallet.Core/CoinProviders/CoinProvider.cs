@@ -10,7 +10,7 @@ namespace Wallet.Core.CoinProviders
     {
         public abstract Task SendTransaction(SendTransaction tx);
         public abstract List<Transaction> GetWalletHistory(); 
-        public abstract void RestoreWallet(string walletName);
+        public abstract bool RestoreWallet(string walletName, string words, string password);
         public abstract decimal GetBalance();
         public abstract decimal GetUSDBalance();
         public abstract void SetNetwork(NetworkType network);

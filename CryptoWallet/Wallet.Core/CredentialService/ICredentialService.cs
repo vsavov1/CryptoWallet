@@ -11,5 +11,6 @@ namespace Wallet.Core.CredentialService
     {
         bool CreateAccount(string password, string accountName);
         string UnlockAccount(string password, string accountName);
+        void CreateSimpleAccount(string password, string accountName, string mnemonic);
     }
 }

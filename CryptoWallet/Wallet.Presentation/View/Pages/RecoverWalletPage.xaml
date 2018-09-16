@@ -1,0 +1,47 @@
+﻿<Page x:Class="Wallet.Presentation.View.Pages.RecoverWalletPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Wallet.Presentation.View.Pages"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:converters="clr-namespace:Wallet.Presentation.Converters"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="RecoverWalletPage">
+    <Grid>
+
+        <Grid.Resources  >
+            <converters:RecoverWalletConverter x:Key="RecoveryWalletConverter" />
+            <converters:EnumBooleanConverter x:Key="EnumBooleanConverter" />
+        </Grid.Resources>
+        <TextBlock HorizontalAlignment="Center" FontSize="35" Margin="0,50,0,0" TextWrapping="Wrap" Text="Wallet recovery" VerticalAlignment="Top"/>
+        
+        <RadioButton  IsChecked="{Binding Path=WalletModel.RecoveryCoin, Converter={StaticResource EnumBooleanConverter}, ConverterParameter=Bitcoin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="Bitcoin" HorizontalAlignment="Center" Margin="-100,110,0,0" VerticalAlignment="Top"/>
+        <RadioButton  Name="RecoveryCoin" IsChecked="{Binding Path=WalletModel.RecoveryCoin, Converter={StaticResource EnumBooleanConverter}, ConverterParameter=Ethereum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="Ethereum" HorizontalAlignment="Center" Margin="100,110,0,0" VerticalAlignment="Top"/>
+
+        <TextBox HorizontalAlignment="Center" Name="MnemonicPhrase" Text="{Binding RecoveryCoinModel.MnemonicPhrase}" materialDesign:HintAssist.Hint="Mnemonic phrase" VerticalAlignment="Center" Height="33" Margin="0,-115,0,0" TextWrapping="Wrap" Width="200" FontSize="17"/>
+        <TextBox HorizontalAlignment="Center" Name="WalletName" Text="{Binding RecoveryCoinModel.WalletName}" materialDesign:HintAssist.Hint="Wallet Name" VerticalAlignment="Center" Height="33" Margin="0,-25,0,0" TextWrapping="Wrap" Width="200" FontSize="17"/>
+        <PasswordBox PasswordChanged="PasswordChanged" HorizontalAlignment="Center" Name="Password" Style="{StaticResource MaterialDesignPasswordBox}" materialDesign:HintAssist.Hint="Password" VerticalAlignment="Center" Height="33" Margin="0,65,0,0" FontSize="17" Width="200"/>
+
+        <Button Content="Back" Click="BackToMainWindow" Background="{StaticResource MaterialDesignBodyLight}" HorizontalAlignment="Center" Margin="300,310,424,0" VerticalAlignment="Top" Width="76"/>
+        <Button Name="RecoveryBtn" Content="Recover"  Command="{Binding RecoverWalletCommand}" HorizontalAlignment="Center" Margin="424,310,300,0" VerticalAlignment="Top" Width="86">
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource RecoveryWalletConverter}">
+                    <Binding ElementName="MnemonicPhrase" Path="Text" />
+                    <Binding ElementName="WalletName" Path="Text" />
+                    <Binding ElementName="Password" Path="."/>
+                    <Binding ElementName="RecoveryCoin" Path="IsChecked"/>
+                </MultiBinding>
+            </Button.CommandParameter>
+        </Button>
+
+        <TextBlock Foreground="Green" Visibility="{Binding RecoverSuccess}" Name="SuccesfullyRecoverd" HorizontalAlignment="Center" Margin="0,135,0,0" TextWrapping="Wrap" Text="Succesfully recoverd" VerticalAlignment="Center"/>
+        <TextBlock Foreground="Red" Visibility="{Binding RecoverFailed}" Name="ErrorMessage" HorizontalAlignment="Center" Margin="0,135,0,0" TextWrapping="Wrap" Text="Error!" VerticalAlignment="Center"/>
+        <Grid.Background>
+            <ImageBrush ImageSource="../../Resources/bgr.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
+
+        
+    </Grid>
+</Page>

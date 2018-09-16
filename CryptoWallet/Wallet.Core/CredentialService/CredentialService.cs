@@ -88,6 +88,13 @@ namespace Wallet.Core.CredentialService
             return true;
         }
 
+        public void CreateSimpleAccount(string password, string accoutName, string mnemonic)
+        {
+            var encryptedMnemonic = Encrypt(mnemonic, password);
+
+            File.WriteAllBytes($@".\{accoutName}.txt", encryptedMnemonic);
+        }
+
         public string UnlockAccount(string password, string accountName)
         {
             return Decrypt(password, accountName);
