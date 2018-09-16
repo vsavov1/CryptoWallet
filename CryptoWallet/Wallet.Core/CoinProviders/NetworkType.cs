@@ -8,7 +8,7 @@ namespace Wallet.Core.CoinProviders
 {
     public enum NetworkType
     {
-        MainNet,
-        TestNet
+        TestNet,
+        MainNet
     }
 }

@@ -99,11 +99,11 @@ namespace Wallet.Core.CoinProviders
 
                 var bigint = Web3.Convert.FromWei(System.Numerics.BigInteger.Parse(dynObj.result[index].value.ToString()));
 
-                if (dynObj.result[index].to.ToString() == wallet.GetAccount(0).Address)
+                if (((string)dynObj.result[index].to).ToLower() == wallet.GetAccount(0).Address.Trim().ToLower())
                 {
                     tx.Text = $"#{index + 1}   Transaction ID: { dynObj.result[index].hash}, received coins {bigint}, confirms: { dynObj.result[index].confirmations }";
                 }
-                else if (dynObj.result[index].to.ToString() != wallet.GetAccount(0).Address)
+                else if (((string)dynObj.result[index].to).ToLower() != wallet.GetAccount(0).Address.ToLower())
                 {
                     tx.Text = $"#{index + 1}   Transaction ID: { dynObj.result[index].hash}, sent coins {bigint}, confirms: { dynObj.result[index].confirmations }";
                 }
